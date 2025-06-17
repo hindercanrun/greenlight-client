@@ -20,6 +20,7 @@ BOOL APIENTRY DllMain(
 
 	// 18/04/2025: Xenia doesn't have a dashboard system, so we can't use DLL_PROCESS_DETACH
 	// 12/05/2025: Do we want to support xbox? then we should add DLL_PROCESS_DETACH code
+	// 16/06/2025: then we will have to add unloading code
 
 	return TRUE;
 }
