@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="mod">
+      <UniqueIdentifier>{671449b5-3187-43f4-ab06-b65fc4f6baaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mod\utils">
+      <UniqueIdentifier>{5ee227ac-38d7-4336-bca7-58d9fe9bc195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mod\game">
+      <UniqueIdentifier>{7a7cc8ad-8541-4e05-babb-9e657fc65d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mod\components">
+      <UniqueIdentifier>{880944d1-e1ed-44ec-8596-a851d5a3eaeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="mod\components\modules">
+      <UniqueIdentifier>{c48dd34b-f9e7-4c87-aa28-9a6e6c422b34}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\components\loader.cpp">
+      <Filter>mod\components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\cmd.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\lui.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\online.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\patches.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>mod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\hook.cpp">
+      <Filter>mod\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\symbols.cpp">
+      <Filter>mod\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\localized_strings.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\string.cpp">
+      <Filter>mod\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\utils\io.cpp">
+      <Filter>mod\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\game\game.cpp">
+      <Filter>mod\game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\drawing.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\debug.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\branding.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\dev_console.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\dev_gui.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\dvar.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\components\modules\demon_ware.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\components\loader.hpp">
+      <Filter>mod\components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\cmd.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\lui.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\online.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\patches.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\std_include.hpp">
+      <Filter>mod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\hook.hpp">
+      <Filter>mod\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\structs.hpp">
+      <Filter>mod\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\symbols.hpp">
+      <Filter>mod\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\localized_strings.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\string.hpp">
+      <Filter>mod\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\utils\io.hpp">
+      <Filter>mod\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\game.hpp">
+      <Filter>mod\game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\drawing.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\debug.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\branding.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\dev_console.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\dev_gui.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\dvar.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
