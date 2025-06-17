@@ -27,9 +27,6 @@
     <ClCompile Include="..\src\components\modules\lui.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\components\modules\online.cpp">
-      <Filter>mod\components\modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\components\modules\patches.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     <ClCompile Include="..\src\utils\io.cpp">
       <Filter>mod\utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\game\game.cpp">
-      <Filter>mod\game</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\components\modules\drawing.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
@@ -63,16 +57,7 @@
     <ClCompile Include="..\src\components\modules\branding.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\components\modules\dev_console.cpp">
-      <Filter>mod\components\modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\components\modules\dev_gui.cpp">
-      <Filter>mod\components\modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\components\modules\dvar.cpp">
-      <Filter>mod\components\modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\components\modules\demon_ware.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,9 +69,6 @@
       <Filter>mod\components\modules</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\modules\lui.hpp">
-      <Filter>mod\components\modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\components\modules\online.hpp">
       <Filter>mod\components\modules</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\modules\patches.hpp">
@@ -125,13 +107,7 @@
     <ClInclude Include="..\src\components\modules\branding.hpp">
       <Filter>mod\components\modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\components\modules\dev_console.hpp">
-      <Filter>mod\components\modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\components\modules\dev_gui.hpp">
-      <Filter>mod\components\modules</Filter>
-    </ClInclude>
-    <ClInclude Include="..\src\components\modules\dvar.hpp">
       <Filter>mod\components\modules</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,5 +2,5 @@
 
 namespace branding
 {
-	void changes();
+	void load();
 }

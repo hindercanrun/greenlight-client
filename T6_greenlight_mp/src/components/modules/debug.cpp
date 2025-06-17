@@ -13,22 +13,27 @@ namespace debug
 		// ffs: code_post_gfx_mp, common_mp and level
 		void build_ff(const char* ff)
 		{
-			game::Com_Printf(14, "Building fast file '%s'.\n", ff);
+			symbols::Com_Printf(14, "Building fast file '%s'.\n", ff);
 
-			game::RawFile* rawfile = game::DB_FindXAssetHeader(game::ASSET_TYPE_RAWFILE, ff, true, -1).rawfile;
+			structs::RawFile* rawfile = symbols::DB_FindXAssetHeader(structs::ASSET_TYPE_RAWFILE, ff, true, -1).rawfile;
 			if (rawfile->len)
 			{
-				game::Com_PrintError(1, "Failed to build fast file '%s'.\n", ff);
-				game::Com_PrintError(1, "There were errors when building fast file '%s'.\n", ff);
-				game::Com_PrintError(1, rawfile->buffer);
+				symbols::Com_PrintError(1, "Failed to build fast file '%s'.\n", ff);
+				symbols::Com_PrintError(1, "There were errors when building fast file '%s'.\n", ff);
+				symbols::Com_PrintError(1, rawfile->buffer);
 			}
 
-			game::Com_Printf(14, "Successfully built fast file '%s'.\n", ff);
+			symbols::Com_Printf(14, "Successfully built fast file '%s'.\n", ff);
+		}
+
+		void register_hooks()
+		{
+			build_ff_hook.create(0x823FD588, build_ff);
 		}
 	}
 
-	void changes()
+	void load()
 	{
-		build_ff_hook.create(0x823FD588, build_ff);
+		register_hooks();
 	}
 }

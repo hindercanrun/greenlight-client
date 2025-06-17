@@ -59,6 +59,12 @@ namespace localized_strings
 			auto invoke = get_string_hook.invoke<const char*(*)(const char*)>();
 			return invoke(reference);
 		}
+
+		void register_hooks()
+		{
+			// allow localized strings to be modified by plugin
+			get_string_hook.create(0x825130F0, get_string);
+		}
 	}
 
 	void override_string(const std::string& key, const std::string& value)
@@ -71,12 +77,8 @@ namespace localized_strings
 		LeaveCriticalSection(&lock.crit_sec);
 	}
 
-	void changes()
+	void load()
 	{
-		// allow localized strings to be modified by plugin
-		get_string_hook.create(0x825130F0, get_string); // SEH_StringEd_GetString
-
-		//test run
-		override_string("MENU_MATCHMAKING_CAPS", "Custom Localized Strings!!");
+		register_hooks();
 	}
 }

@@ -2,5 +2,5 @@
 
 namespace drawing
 {
-	void changes();
+	void load();
 }

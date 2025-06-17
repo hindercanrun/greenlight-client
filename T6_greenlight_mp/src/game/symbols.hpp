@@ -1,6 +1,6 @@
 #pragma once
 
-namespace game
+namespace symbols
 {
 	typedef void(*CG_DrawVersion_t)();
 	extern CG_DrawVersion_t CG_DrawVersion;
@@ -17,13 +17,13 @@ namespace game
 	typedef const char*(*Cmd_Argv_t)(int value);
 	extern Cmd_Argv_t Cmd_Argv;
 
-	typedef void(*Cmd_AddCommandInternal_t)(const char* cmdName, void (__cdecl* function)(), cmd_function_s* allocedCmd);
+	typedef void(*Cmd_AddCommandInternal_t)(const char* cmdName, void (__cdecl* function)(), structs::cmd_function_s* allocedCmd);
 	extern Cmd_AddCommandInternal_t Cmd_AddCommandInternal;
 
 	typedef void(*Cmd_ExecuteSingleCommand_t)(int localClientNum, int controllerIndex, const char* text);
 	extern Cmd_ExecuteSingleCommand_t Cmd_ExecuteSingleCommand;
 
-	typedef cmd_function_s*(*Cmd_FindCommand_t)(const char* cmdName);
+	typedef structs::cmd_function_s*(*Cmd_FindCommand_t)(const char* cmdName);
 	extern Cmd_FindCommand_t Cmd_FindCommand;
 
 	typedef void(*Cmd_SetAutoComplete_t)(const char* cmdName, const char* dir, const char* ext);
@@ -38,7 +38,7 @@ namespace game
 	typedef char*(*Com_Parse_t)(const char** data_p);
 	extern Com_Parse_t Com_Parse;
 
-	typedef void(*Com_Error_t)(errorParm_t code, const char* fmt, ...);
+	typedef void(*Com_Error_t)(structs::errorParm_t code, const char* fmt, ...);
 	extern Com_Error_t Com_Error;
 
 	typedef void(*Com_Printf_t)(int channel, const char* fmt, ...);
@@ -77,54 +77,54 @@ namespace game
 	typedef BOOL(*Con_IsDvarCommand_t)(const char* cmd);
 	extern Con_IsDvarCommand_t Con_IsDvarCommand;
 
-	typedef XAssetHeader(*DB_FindXAssetHeader_t)(XAssetType type, const char* name, bool errorIfMissing, int waitTime);
+	typedef structs::XAssetHeader(*DB_FindXAssetHeader_t)(structs::XAssetType type, const char* name, bool errorIfMissing, int waitTime);
 	extern DB_FindXAssetHeader_t DB_FindXAssetHeader;
 
-	typedef void(*DB_LoadXAssets_t)(XZoneInfo* zoneInfo, unsigned int zoneCount, int sync);
+	typedef void(*DB_LoadXAssets_t)(structs::XZoneInfo* zoneInfo, unsigned int zoneCount, int sync);
 	extern DB_LoadXAssets_t DB_LoadXAssets;
 
 	typedef BOOL(*DevGui_IsActive_t)();
 	extern DevGui_IsActive_t DevGui_IsActive;
 
-	typedef dvar_s*(*Dvar_RegisterBool_t)(const char* dvar, bool value, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterBool_t)(const char* dvar, bool value, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterBool_t Dvar_RegisterBool;
 
-	typedef dvar_s*(*Dvar_RegisterInt_t)(const char* dvar, int value, int min, int max, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterInt_t)(const char* dvar, int value, int min, int max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterInt_t Dvar_RegisterInt;
 
-	typedef dvar_s*(*Dvar_RegisterInt64_t)(const char* dvar, __int64 value, __int64 min, __int64 max, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterInt64_t)(const char* dvar, __int64 value, __int64 min, __int64 max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterInt64_t Dvar_RegisterInt64;
 
-	typedef dvar_s*(*Dvar_RegisterFloat_t)(const char* dvar, float value, float min, float max, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterFloat_t)(const char* dvar, float value, float min, float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterFloat_t Dvar_RegisterFloat;
 
-	typedef dvar_s*(*Dvar_RegisterVec2_t)(const char* dvar, int x, int y,
+	typedef structs::dvar_s*(*Dvar_RegisterVec2_t)(const char* dvar, int x, int y,
 										  float min, float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterVec2_t Dvar_RegisterVec2;
 
-	typedef dvar_s*(*Dvar_RegisterVec3_t)(const char* dvar, int x, int y, int z, float min,
+	typedef structs::dvar_s*(*Dvar_RegisterVec3_t)(const char* dvar, int x, int y, int z, float min,
 										  float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterVec3_t Dvar_RegisterVec3;
 
-	typedef dvar_s*(*Dvar_RegisterVec4_t)(const char* dvar, int x, int y, int z, int w, float min,
+	typedef structs::dvar_s*(*Dvar_RegisterVec4_t)(const char* dvar, int x, int y, int z, int w, float min,
 										  float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterVec4_t Dvar_RegisterVec4;
 
-	typedef dvar_s*(*Dvar_RegisterString_t)(const char* dvar, const char* value, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterString_t)(const char* dvar, const char* value, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterString_t Dvar_RegisterString;
 
-	typedef dvar_s*(*Dvar_RegisterEnum_t)(const char* dvar, const char** value, int defaultIndex, unsigned __int16 flags, const char* description);
+	typedef structs::dvar_s*(*Dvar_RegisterEnum_t)(const char* dvar, const char** value, int defaultIndex, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterEnum_t Dvar_RegisterEnum;
 
-	typedef dvar_s*(*Dvar_RegisterColor_t)(const char* dvar, float r, float g, float b,
+	typedef structs::dvar_s*(*Dvar_RegisterColor_t)(const char* dvar, float r, float g, float b,
 										   float a, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterColor_t Dvar_RegisterColor;
 
-	typedef dvar_s*(*Dvar_RegisterLinearRGB_t)(const char* dvar, int x, int y, int z, float min,
+	typedef structs::dvar_s*(*Dvar_RegisterLinearRGB_t)(const char* dvar, int x, int y, int z, float min,
 											  float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterLinearRGB_t Dvar_RegisterLinearRGB;
 
-	typedef dvar_s*(*Dvar_RegisterColorXYZ_t)(const char* dvar, int x, int y, int z, float min,
+	typedef structs::dvar_s*(*Dvar_RegisterColorXYZ_t)(const char* dvar, int x, int y, int z, float min,
 											  float max, unsigned __int16 flags, const char* description);
 	extern Dvar_RegisterColorXYZ_t Dvar_RegisterColorXYZ;
 
@@ -134,7 +134,7 @@ namespace game
 	typedef int(*SV_GameCommand_t)();
 	extern SV_GameCommand_t SV_GameCommand;
 
-	typedef dvar_s*(*Dvar_FindVar_t)(const char* dvar);
+	typedef structs::dvar_s*(*Dvar_FindVar_t)(const char* dvar);
 	extern Dvar_FindVar_t Dvar_FindVar;
 
 	typedef unsigned int(*FS_Write_t)(char* buffer, unsigned int len, int h);
@@ -149,7 +149,7 @@ namespace game
 	typedef int(*FS_FOpenFileRead_t)(const char* filename, int* file);
 	extern FS_FOpenFileRead_t FS_FOpenFileRead;
 
-	typedef int(*FS_FOpenFileByMode_t)(const char *qpath, int *f, fsMode_t mode);
+	typedef int(*FS_FOpenFileByMode_t)(const char *qpath, int *f, structs::fsMode_t mode);
 	extern FS_FOpenFileByMode_t FS_FOpenFileByMode;
 
 	typedef int(*FS_FOpenTextFileWrite_t)(const char* filename);
@@ -185,23 +185,23 @@ namespace game
 	typedef void(*LUI_CoD_Shutdown_t)();
 	extern LUI_CoD_Shutdown_t LUI_CoD_Shutdown;
 
-	typedef Material *(*Material_RegisterHandle_t)(const char *name, int imageTrack);
+	typedef structs::Material *(*Material_RegisterHandle_t)(const char *name, int imageTrack);
 	extern Material_RegisterHandle_t Material_RegisterHandle;
 
 	typedef const char*(*Sys_DefaultInstallPath_t)();
 	extern Sys_DefaultInstallPath_t Sys_DefaultInstallPath;
 
-	typedef const char*(*Scr_AddSourceBuffer_t)(scriptInstance_t inst, const char* extFilename,
+	typedef const char*(*Scr_AddSourceBuffer_t)(structs::scriptInstance_t inst, const char* extFilename,
 												const char* codePos, char *sourceBuf, int len, bool doEolFixup, bool archive);
 	extern Scr_AddSourceBuffer_t Scr_AddSourceBuffer;
 
-	typedef void(*R_AddCmdDrawStretchPic_t)(float x, float y, float w, float h, float s0, float t0, float s1, float t1, const float* color, Material* material);
+	typedef void(*R_AddCmdDrawStretchPic_t)(float x, float y, float w, float h, float s0, float t0, float s1, float t1, const float* color, structs::Material* material);
 	extern R_AddCmdDrawStretchPic_t R_AddCmdDrawStretchPic;
 
-	typedef void(*R_AddCmdDrawText_t)(const char* text, int maxChars, Font_s* font, float x, float y, float xScale, float yScale, float rotation, const float* color, int style);
+	typedef void(*R_AddCmdDrawText_t)(const char* text, int maxChars, structs::Font_s* font, float x, float y, float xScale, float yScale, float rotation, const float* color, int style);
 	extern R_AddCmdDrawText_t R_AddCmdDrawText;
 
-	typedef int(*R_TextWidth_t)(const char *text, int maxChars, Font_s *font);
+	typedef int(*R_TextWidth_t)(const char *text, int maxChars, structs::Font_s *font);
 	extern R_TextWidth_t R_TextWidth;
 
 	typedef unsigned int(*R_GetFrameCount_t)();
@@ -222,11 +222,11 @@ namespace game
 	typedef void(*I_strncat_t)(char* dest, int size, const char* src);
 	extern I_strncat_t I_strncat;
 
-	extern ScreenPlacement* scrPlaceFullUnsafe;
+	extern structs::ScreenPlacement* scrPlaceFullUnsafe;
 
-	extern CG_PerfInfo* cg_perfInfo;
+	extern structs::CG_PerfInfo* cg_perfInfo;
 
-	extern XNADDR_* g_ourXnaddr;
+	extern XNADDR* g_ourXnaddr;
 
 	extern bool byte_84A99C93;
 	extern bool byte_84AB7CA2;

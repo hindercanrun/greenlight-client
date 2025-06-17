@@ -10,7 +10,7 @@ namespace utils
 			//check if the title is t6
 			if (title_id != TITLE_ID) // 415608C3
 			{
-				game::Com_PrintError(1,
+				symbols::Com_PrintError(1,
 					"incorrect title id. current title id: %X, expecting: %X",
 					title_id,
 					TITLE_ID);

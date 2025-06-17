@@ -8,9 +8,9 @@ namespace drawing
 {
 	namespace
 	{
-		game::Font_s** small_font;
+		structs::Font_s** small_font;
 
-		game::dvar_s* cg_drawFPSCounter;
+		structs::dvar_s* cg_drawFPSCounter;
 
 		float fps_colour_good[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
 		float fps_colour_ok[4] = {1.0f, 0.7f, 0.3f, 1.0f};
@@ -19,15 +19,16 @@ namespace drawing
 
 		void draw_fps()
 		{
-			cg_drawFPSCounter = game::Dvar_RegisterBool("cg_drawFPSCounter",
-														true,
-														game::DVAR_ARCHIVE,
-														"Draw the FPS counter");
+			cg_drawFPSCounter = symbols::Dvar_RegisterBool(
+				"cg_drawFPSCounter",
+				true,
+				structs::DVAR_ARCHIVE,
+				"Draw the FPS counter");
 
 			if (!*small_font || !cg_drawFPSCounter->current.enabled)
 				return;
 
-			int fps = (int)(float)(1000.0 / game::cg_perfInfo->frame.average);
+			int fps = (int)(float)(1000.0 / symbols::cg_perfInfo->frame.average);
 
 			const auto* fps_string = utils::string::va("%i", fps);
 
@@ -35,7 +36,7 @@ namespace drawing
 									  (fps > 50)  ? fps_colour_ok :
 													fps_colour_bad;
 
-			game::R_AddCmdDrawText(
+			symbols::R_AddCmdDrawText(
 				fps_string,
 				std::numeric_limits<int>::max(),
 				*small_font,
@@ -57,14 +58,14 @@ namespace drawing
 
 			const auto* text = "T6_greenlight_mp :: modification by hindercanrun";
 
-			game::R_AddCmdDrawText(
+			symbols::R_AddCmdDrawText(
 				text, std::numeric_limits<int>::max(),
 				*small_font, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f,
 				colour, 3);
 
 			const auto* date_string = utils::string::va("date: %s", utils::string::get_time_and_date());
 
-			game::R_AddCmdDrawText(
+			symbols::R_AddCmdDrawText(
 				date_string, std::numeric_limits<int>::max(),
 				*small_font, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f,
 				colour, 3);
@@ -79,18 +80,23 @@ namespace drawing
 			auto invoke = draw_screen_hook.invoke<void(*)(int)>();
 			invoke(client_num);
 		}
+
+		void register_hooks()
+		{
+			small_font = reinterpret_cast<structs::Font_s**>(0x842CE7E8);
+
+			draw_screen_hook.create(0x8232BA80, draw_screen);
+
+			// cg_drawfps font
+			utils::hook::set_string(0x820141B4, "fonts/720/smallFont");
+
+			// p-host string
+			utils::hook::set_string(0x82007AD8, " host");
+		}
 	}
 
-	void changes()
+	void load()
 	{
-		small_font = reinterpret_cast<game::Font_s**>(0x842CE7E8);
-
-		draw_screen_hook.create(0x8232BA80, draw_screen); // CL_DrawScreen
-
-		// cg_drawfps font
-		utils::hook::set_string(0x820141B4, "fonts/720/smallFont");
-
-		// p-host string
-		utils::hook::set_string(0x82007AD8, " host");
+		register_hooks();
 	}
 }

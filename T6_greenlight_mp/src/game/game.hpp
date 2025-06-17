@@ -1,15 +1,5 @@
 #pragma once
 
-namespace game
-{
-	// the functions below are either inlined or removed from the game exe
-
-	int Com_Compress(char* data_p);
-
-	void* Z_MallocGarbage(int size, const char *name, int type);
-	void Z_Free(char *ptr, int type);
-}
-
 typedef struct _XEX_EXECUTION_ID
 {
 	DWORD MediaID;

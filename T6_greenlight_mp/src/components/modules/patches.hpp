@@ -2,5 +2,5 @@
 
 namespace patches
 {
-	void changes();
+	void load();
 }

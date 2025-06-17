@@ -2,5 +2,5 @@
 
 namespace lui
 {
-	void changes();
+	void load();
 }

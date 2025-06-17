@@ -2,7 +2,7 @@
 #include "symbols.hpp"
 #include "structs.hpp"
 
-namespace game
+namespace symbols
 {
 	// functions
 	CG_DrawVersion_t CG_DrawVersion = CG_DrawVersion_t(0x82249CC8);
@@ -95,11 +95,11 @@ namespace game
 	I_strncat_t I_strncat = I_strncat_t(0x825B05B8);
 
 	// variables
-	ScreenPlacement* scrPlaceFullUnsafe = reinterpret_cast<ScreenPlacement*>(0x82EA7478);
+	structs::ScreenPlacement* scrPlaceFullUnsafe = reinterpret_cast<structs::ScreenPlacement*>(0x82EA7478);
 
-	CG_PerfInfo* cg_perfInfo = reinterpret_cast<CG_PerfInfo*>(0x82DC3A40);
+	structs::CG_PerfInfo* cg_perfInfo = reinterpret_cast<structs::CG_PerfInfo*>(0x82DC3A40);
 
-	XNADDR_* g_ourXnaddr = reinterpret_cast<XNADDR_*>(0x8446EC10);
+	XNADDR* g_ourXnaddr = reinterpret_cast<XNADDR*>(0x8446EC10);
 
 	bool byte_84A99C93 = reinterpret_cast<bool*>(0x84A99C93);
 	bool byte_84AB7CA2 = reinterpret_cast<bool*>(0x84AB7CA2);

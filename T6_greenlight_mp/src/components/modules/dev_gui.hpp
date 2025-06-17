@@ -2,5 +2,5 @@
 
 namespace dev_gui
 {
-	void changes();
+	void load();
 }

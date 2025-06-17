@@ -5,50 +5,53 @@
 
 namespace cmd
 {
-
 	namespace
 	{
-		std::vector<game::cmd_function_s*> cmds;
+		static std::vector<structs::cmd_function_s*> cmds;
+		structs::cmd_function_s* allocate_cmd()
+		{
+			auto* cmd = new structs::cmd_function_s;
+			cmds.push_back(cmd);
+
+			return cmd;
+		}
 
 		utils::hook::detour handle_missing_cmd_hook;
 		void handle_missing_cmd(const char* msg, bool from_rcon)
 		{
-			if (!game::Dvar_FindVar(msg))
+			if (!symbols::Dvar_FindVar(msg))
 			{
-				game::Com_Printf(24, "unknown dvar :: '%s'\n", msg);
+				symbols::Com_Printf(24, "unknown dvar :: '%s'\n", msg);
 			}
-			else if (!game::Cmd_FindCommand(msg))
+			else if (!symbols::Cmd_FindCommand(msg))
 			{
-				game::Com_Printf(24, "unknown command :: '%s'\n", msg);
+				symbols::Com_Printf(24, "unknown command :: '%s'\n", msg);
 			}
 		}
-	}
 
-	static game::cmd_function_s* allocate_cmd()
-	{
-		auto* cmd = new game::cmd_function_s;
-		cmds.push_back(cmd);
-
-		return cmd;
+		void register_hooks()
+		{
+			handle_missing_cmd_hook.create(0x824AD688, handle_missing_cmd);
+		}
 	}
 
 	void add(const char* name, void(WINAPIV* func)())
 	{
-		game::Cmd_AddCommandInternal(name, func, allocate_cmd());
+		symbols::Cmd_AddCommandInternal(name, func, allocate_cmd());
 	}
 
 	int params()
 	{
-		return game::Cmd_Argc();
+		return symbols::Cmd_Argc();
 	}
 
 	const char* param(int value)
 	{
-		return game::Cmd_Argv(value);
+		return symbols::Cmd_Argv(value);
 	}
 
-	void changes()
+	void load()
 	{
-		handle_missing_cmd_hook.create(0x824AD688, handle_missing_cmd);
+		register_hooks();
 	}
 }

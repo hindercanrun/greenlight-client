@@ -34,15 +34,15 @@ namespace dev_gui
 			has_func_ran = true;
 
 			// custom dev gui!
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
 		}
 
 		void load_lvl_ffs_stub(const char* name)
 		{
 			// custom dev gui!
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
 
 			auto invoke = load_lvl_ffs_hook.invoke<void(*)(const char*)>();
 			invoke(name);
@@ -51,33 +51,27 @@ namespace dev_gui
 		void sub_824BCC00_stub()
 		{
 			// custom dev gui!
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
+			symbols::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
 
 			auto invoke = sub_824BCC00_hook.invoke<void(*)()>();
 			invoke();
 		}
 
-		void safe_area()
+		void register_hooks()
 		{
+			//matches pc :)
 			get_screen_y_hook.create(0x8238B520, get_screen_y_stub);
 			get_screen_x_hook.create(0x8238B588, get_screen_x_stub);
-		}
 
-		void devgui_cfgs()
-		{
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui");
-			game::Cbuf_InsertText(0, "exec_addtext mod/configs/devgui_mp");
+			devgui_frame_hook.create(0x82307620, devgui_frame_stub);
+			load_lvl_ffs_hook.create(0x824BCCF8, load_lvl_ffs_stub);
+			sub_824BCC00_hook.create(0x824BCC00, sub_824BCC00_stub);
 		}
 	}
 
-	void changes()
+	void load()
 	{
-		//matches pc :)
-		safe_area();
-
-		devgui_frame_hook.create(0x82307620, devgui_frame_stub); // CL_DevGuiFrame
-		load_lvl_ffs_hook.create(0x824BCCF8, load_lvl_ffs_stub); // Com_LoadLevelFastFiles
-		sub_824BCC00_hook.create(0x824BCC00, sub_824BCC00_stub); // sub_824BCC00
+		register_hooks();
 	}
 }

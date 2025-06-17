@@ -1,6 +1,6 @@
 #pragma once
 
-namespace game
+namespace structs
 {
 	struct cmd_function_s
 	{

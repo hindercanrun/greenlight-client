@@ -2,5 +2,5 @@
 
 namespace debug
 {
-	void changes();
+	void load();
 }

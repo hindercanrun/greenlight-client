@@ -7,5 +7,5 @@ namespace cmd
 	int params();
 	const char* param(int value);
 
-	void changes();
+	void load();
 }
