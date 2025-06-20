@@ -7,18 +7,33 @@ namespace patches
 {
 	namespace
 	{
-		utils::hook::detour sys_init_hook;
-
-		void sys_init()
+		utils::hook::detour assert_hook;
+		void assert(const char* filename, int line, int type, const char* fmt, ...)
 		{
-			symbols::Cmd_SetAutoComplete("exec", "", "cfg");
-			sys_init_hook.invoke<void>();
+			char message[1024];
+
+			va_list va;
+			va_start(va, fmt);
+			_vsnprintf_s(message, sizeof(message), fmt, va);
+			message[1023] = '\0';
+
+			symbols::Com_Printf(0, "\n");
+			symbols::Com_Printf(0, "****************************************\n");
+			symbols::Com_Printf(0, "*  Assertion Info:\n");
+			symbols::Com_Printf(0, "*  Message:       %s\n", message);
+			symbols::Com_Printf(0, "*  Plat:          %s\n", "xenon");
+			symbols::Com_Printf(0, "*  File:          %s\n", filename);
+			symbols::Com_Printf(0, "*  Line:          %d\n", line);
+			symbols::Com_Printf(0, "****************************************\n");
 		}
 
 		void register_hooks()
 		{
 			// set D: to game: to allow game function reading
 			utils::hook::set_string(0x82B5F688, "game:");
+
+			// my custom assertion handler
+			assert_hook.create(0x825661F0, assert);
 
 			// redirect:
 			//  log file
@@ -46,8 +61,6 @@ namespace patches
 
 			// redirect config_mp.cfg
 			utils::hook::set_string(0x82079134, "mod/configs/player.cfg");
-
-			sys_init_hook.create(0x825D6DA0, sys_init);
 		}
 	}
 
