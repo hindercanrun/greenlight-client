@@ -1,6 +1,6 @@
 #pragma once
 
-namespace loader
+namespace assertion
 {
 	void load();
 }

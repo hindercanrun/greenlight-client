@@ -60,6 +60,9 @@
     <ClCompile Include="..\src\components\modules\dev_gui.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\components\modules\assertion.cpp">
+      <Filter>mod\components\modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\loader.hpp">
@@ -108,6 +111,9 @@
       <Filter>mod\components\modules</Filter>
     </ClInclude>
     <ClInclude Include="..\src\components\modules\dev_gui.hpp">
+      <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\components\modules\assertion.hpp">
       <Filter>mod\components\modules</Filter>
     </ClInclude>
   </ItemGroup>

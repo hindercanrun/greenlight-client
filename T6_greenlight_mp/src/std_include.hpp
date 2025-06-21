@@ -2,8 +2,6 @@
 
 #define TITLE_ID 0x415608C3 // Black Ops II
 
-#define	MAX_QPATH 64 // max length of a path name
-
 // this makes 'std::numeric_limits<int>::max()' work
 #define NOMINMAX
 

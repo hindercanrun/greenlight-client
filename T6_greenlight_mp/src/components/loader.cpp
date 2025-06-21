@@ -1,6 +1,10 @@
 #include "..\std_include.hpp"
 #include "loader.hpp"
 
+// important modules
+#include "modules\assertion.hpp"
+
+// regular modules
 #include "modules\branding.hpp"
 #include "modules\cmd.hpp"
 #include "modules\debug.hpp"
@@ -14,6 +18,8 @@ namespace loader
 {
 	void load()
 	{
+		assertion::load();
+
 		branding::load();
 		cmd::load();
 		debug::load();

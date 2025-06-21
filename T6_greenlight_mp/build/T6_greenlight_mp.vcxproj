@@ -110,6 +110,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\src\components\loader.cpp" />
+    <ClCompile Include="..\src\components\modules\assertion.cpp" />
     <ClCompile Include="..\src\components\modules\branding.cpp" />
     <ClCompile Include="..\src\components\modules\cmd.cpp" />
     <ClCompile Include="..\src\components\modules\debug.cpp" />
@@ -126,6 +127,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\loader.hpp" />
+    <ClInclude Include="..\src\components\modules\assertion.hpp" />
     <ClInclude Include="..\src\components\modules\branding.hpp" />
     <ClInclude Include="..\src\components\modules\cmd.hpp" />
     <ClInclude Include="..\src\components\modules\debug.hpp" />
