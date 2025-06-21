@@ -16,6 +16,9 @@
     <Filter Include="mod\components\modules">
       <UniqueIdentifier>{c48dd34b-f9e7-4c87-aa28-9a6e6c422b34}</UniqueIdentifier>
     </Filter>
+    <Filter Include="mod\game\structures">
+      <UniqueIdentifier>{076cae43-7d27-41e3-8b34-07173074585b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\src\components\loader.cpp">
@@ -83,9 +86,6 @@
     <ClInclude Include="..\src\utils\hook.hpp">
       <Filter>mod\utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\game\structs.hpp">
-      <Filter>mod\game</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\game\symbols.hpp">
       <Filter>mod\game</Filter>
     </ClInclude>
@@ -115,6 +115,12 @@
     </ClInclude>
     <ClInclude Include="..\src\components\modules\assertion.hpp">
       <Filter>mod\components\modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\structures\assets.hpp">
+      <Filter>mod\game\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\structures\structs.hpp">
+      <Filter>mod\game\structures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -32,7 +32,7 @@ namespace utils
 		{
 			if (this->original_length_ != NULL)
 			{
-				std::runtime_error(symbols::va("Unable to create hook at location: %p", this->place_));
+				std::runtime_error("Unable to create hook");
 				return false;
 			}
 

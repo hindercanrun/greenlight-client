@@ -42,8 +42,10 @@
 #include <xtl.h>
 #include <xboxmath.h>
 
+// structs and stuff
+#include "game\structures\assets.hpp"
+#include "game\structures\structs.hpp"
 #include "game\game.hpp"
-#include "game\structs.hpp"
 #include "game\symbols.hpp"
 
 // xbox kernel stuff

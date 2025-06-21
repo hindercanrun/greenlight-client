@@ -37,7 +37,7 @@ namespace cmd
 
 	void add(const char* name, void(WINAPIV* func)())
 	{
-		symbols::Cmd_AddCommandInternal(name, func, allocate_cmd());
+		symbols::Cmd_AddCommand(name, func, allocate_cmd());
 	}
 
 	int params()

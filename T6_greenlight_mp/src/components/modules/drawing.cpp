@@ -8,15 +8,13 @@ namespace drawing
 {
 	namespace
 	{
-		structs::Font_s** small_font;
-
-		structs::dvar_s* cg_drawFPSCounter;
-
 		float fps_colour_good[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
 		float fps_colour_ok[4] = {1.0f, 0.7f, 0.3f, 1.0f};
 		float fps_colour_bad[4] = {1.0f, 0.3f, 0.3f, 1.0f};
 		float fps_colour_very_bad[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
 
+		structs::Font_s** small_font;
+		const structs::dvar_t* cg_drawFPSCounter = nullptr;
 		void draw_fps()
 		{
 			cg_drawFPSCounter = symbols::Dvar_RegisterBool(

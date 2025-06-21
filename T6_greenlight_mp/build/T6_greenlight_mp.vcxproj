@@ -141,7 +141,8 @@
     <ClInclude Include="..\src\components\modules\lui.hpp" />
     <ClInclude Include="..\src\components\modules\patches.hpp" />
     <ClInclude Include="..\src\game\game.hpp" />
-    <ClInclude Include="..\src\game\structs.hpp" />
+    <ClInclude Include="..\src\game\structures\assets.hpp" />
+    <ClInclude Include="..\src\game\structures\structs.hpp" />
     <ClInclude Include="..\src\game\symbols.hpp" />
     <ClInclude Include="..\src\std_include.hpp" />
     <ClInclude Include="..\src\utils\hook.hpp" />
