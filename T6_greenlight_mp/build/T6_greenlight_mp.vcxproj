@@ -41,14 +41,18 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
     <LinkIncremental>false</LinkIncremental>
     <RemoteRoot>hdd:\</RemoteRoot>
-    <OutDir>$(ProjectDir)bin\$(Configuration)\</OutDir>
-    <IntDir>$(ProjectDir)obj\$(Configuration)\</IntDir>
-    <OutputFile>$(ProjectDir)bin\$(Configuration)\T6_greenlight_mp.exe</OutputFile>
-    <ImageXexOutput>$(ProjectDir)bin\$(Configuration)\$(ProjectName).xex</ImageXexOutput>
+    <OutDir>$(ProjectDir)bin\release_xenon\</OutDir>
+    <IntDir>$(ProjectDir)obj\release_xenon\</IntDir>
+    <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+    <ImageXexOutput>$(OutDir)\$(ProjectName).xex</ImageXexOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">
     <LinkIncremental>false</LinkIncremental>
     <RemoteRoot>hdd:\</RemoteRoot>
+    <OutDir>$(ProjectDir)bin\debug_xenon\</OutDir>
+    <IntDir>$(ProjectDir)obj\debug_xenon\</IntDir>
+    <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+    <ImageXexOutput>$(OutDir)\$(ProjectName).xex</ImageXexOutput>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
     <ClCompile>

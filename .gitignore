@@ -1,5 +1,7 @@
-debug
-release
+# build paths
+release_xenon
+debug_xenon
+
 ipch
 
 *.sdf
