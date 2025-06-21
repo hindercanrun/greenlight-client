@@ -123,6 +123,7 @@
     <ClCompile Include="..\src\components\modules\localized_strings.cpp" />
     <ClCompile Include="..\src\components\modules\lui.cpp" />
     <ClCompile Include="..\src\components\modules\patches.cpp" />
+    <ClCompile Include="..\src\game\dvars.cpp" />
     <ClCompile Include="..\src\game\symbols.cpp" />
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\utils\hook.cpp" />
@@ -140,6 +141,7 @@
     <ClInclude Include="..\src\components\modules\localized_strings.hpp" />
     <ClInclude Include="..\src\components\modules\lui.hpp" />
     <ClInclude Include="..\src\components\modules\patches.hpp" />
+    <ClInclude Include="..\src\game\dvars.hpp" />
     <ClInclude Include="..\src\game\game.hpp" />
     <ClInclude Include="..\src\game\structures\assets.hpp" />
     <ClInclude Include="..\src\game\structures\structs.hpp" />

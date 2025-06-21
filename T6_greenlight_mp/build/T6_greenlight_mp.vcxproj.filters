@@ -66,6 +66,9 @@
     <ClCompile Include="..\src\components\modules\assertion.cpp">
       <Filter>mod\components\modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\game\dvars.cpp">
+      <Filter>mod\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\components\loader.hpp">
@@ -121,6 +124,9 @@
     </ClInclude>
     <ClInclude Include="..\src\game\structures\structs.hpp">
       <Filter>mod\game\structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\game\dvars.hpp">
+      <Filter>mod\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -45,6 +45,7 @@
 // structs and stuff
 #include "game\structures\assets.hpp"
 #include "game\structures\structs.hpp"
+#include "game\dvars.hpp"
 #include "game\game.hpp"
 #include "game\symbols.hpp"
 

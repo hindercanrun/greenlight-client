@@ -18,6 +18,9 @@ namespace loader
 {
 	void load()
 	{
+		// TODO: maybe there's a better spot for this?
+		//dvars::register_dvars();
+
 		assertion::load();
 
 		branding::load();
