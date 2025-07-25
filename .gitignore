@@ -1,9 +1,8 @@
-# build paths
-release_xenon
-debug_xenon
+# build results
+Source/Build/Output/
 
-ipch
-
+*.user
 *.sdf
-*.opensdf
 *.suo
+*.opensdf
+*.ipch
