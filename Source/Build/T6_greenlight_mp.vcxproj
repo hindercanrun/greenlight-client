@@ -119,6 +119,7 @@
     <ClCompile Include="..\Components\Modules\DevGui.cpp" />
     <ClCompile Include="..\Components\Modules\Drawing.cpp" />
     <ClCompile Include="..\Components\Modules\LUI.cpp" />
+    <ClCompile Include="..\Components\Modules\Patches.cpp" />
     <ClCompile Include="..\Game\Dvars.cpp" />
     <ClCompile Include="..\Game\Symbols.cpp" />
     <ClCompile Include="..\Main.cpp" />
@@ -131,6 +132,7 @@
     <ClInclude Include="..\Components\Modules\DevGui.h" />
     <ClInclude Include="..\Components\Modules\Drawing.h" />
     <ClInclude Include="..\Components\Modules\LUI.h" />
+    <ClInclude Include="..\Components\Modules\Patches.h" />
     <ClInclude Include="..\game\Dvars.h" />
     <ClInclude Include="..\game\structures\Assets.h" />
     <ClInclude Include="..\game\structures\Structs.h" />

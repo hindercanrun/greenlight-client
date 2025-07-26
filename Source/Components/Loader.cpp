@@ -5,6 +5,7 @@
 #include "Modules\DevGui.h"
 #include "Modules\Drawing.h"
 #include "Modules\LUI.h"
+#include "Modules\Patches.h"
 
 namespace Loader
 {
@@ -14,6 +15,7 @@ namespace Loader
 		DevGui::Load();
 		Drawing::Load();
 		LUI::Load();
+		Patches::Load();
 	}
 
 	void Unload()
