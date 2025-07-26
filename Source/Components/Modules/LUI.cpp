@@ -41,9 +41,9 @@ namespace LUI
 
 	void UnregisterHooks()
 	{
-		LUI_CoD_Init_Hook.Clear();
-		LUI_Shutdown_Hook.Clear();
-		koreDefaultLogger_Hook.Clear();
+		LUI_CoD_Init_Hook.Remove();
+		LUI_Shutdown_Hook.Remove();
+		koreDefaultLogger_Hook.Remove();
 	}
 
 	void Load()

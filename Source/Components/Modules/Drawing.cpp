@@ -65,7 +65,7 @@ namespace Drawing
 
 	void UnregisterHooks()
 	{
-		CL_DrawScreen_Hook.Clear();
+		CL_DrawScreen_Hook.Remove();
 	}
 
 	void Load()

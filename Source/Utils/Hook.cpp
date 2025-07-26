@@ -37,7 +37,7 @@ namespace Utils
 
 		Detour::~Detour()
 		{
-			Clear();
+			Remove();
 		}
 
 		bool Detour::Create(void* place, void* target)
@@ -74,7 +74,7 @@ namespace Utils
 			return Create((void*)(place), target);
 		}
 
-		bool Detour::Clear()
+		bool Detour::Remove()
 		{
 			if (place_ && originalLength_ != 0)
 			{

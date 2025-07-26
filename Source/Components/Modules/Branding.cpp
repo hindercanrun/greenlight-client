@@ -23,7 +23,7 @@ namespace Branding
 
 	void UnregisterHooks()
 	{
-		Com_GetBuildVersion_Hook.Clear();
+		Com_GetBuildVersion_Hook.Remove();
 	}
 
 	void Load()

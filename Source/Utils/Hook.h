@@ -69,7 +69,8 @@ namespace Utils
 
 			bool Create(void* place, void* target);
 			bool Create(size_t place, void* target);
-			bool Clear();
+
+			bool Remove();
 
 			void* GetTrampolineAddress() const
 			{
