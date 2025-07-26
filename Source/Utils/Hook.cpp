@@ -1,12 +1,9 @@
 #include "../Std_Include.h"
 #include "Hook.h"
 
-// We must do this to make hooks work on Xenia.
-#if IS_XENIA
 #pragma section(".text")
 __declspec(allocate(".text")) BYTE Utils::Hook::Detour::trampolineBuffer[200 * 20];
 SIZE_T Utils::Hook::Detour::trampolineSize = 0;
-#endif
 
 namespace Utils
 {

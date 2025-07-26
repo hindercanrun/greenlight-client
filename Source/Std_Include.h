@@ -1,9 +1,5 @@
 #pragma once
 
-#ifndef IS_XENIA
-#define IS_XENIA TRUE // Temp value for now.
-#endif
-
 #define TITLE_ID 0x415608C3 // New Moon
 
 // This makes 'std::numeric_limits<int>::max()' work.

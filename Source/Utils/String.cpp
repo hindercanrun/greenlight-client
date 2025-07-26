@@ -7,15 +7,11 @@ namespace Utils
 	{
 		const char* Va(const char* fmt, ...)
 		{
-			char string[2][32000]; // in case it's called by nested functions
-			auto i = 0;
-
-			char* buf = string[i];
-			i = 1 - i;
+			static char buf[32000];
 
 			va_list args;
 			va_start(args, fmt);
-			vsprintf_s(buf, sizeof(string[0]), fmt, args);
+			vsprintf_s(buf, sizeof(buf), fmt, args);
 			va_end(args);
 
 			return buf;
