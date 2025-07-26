@@ -6,11 +6,11 @@
 
 namespace Drawing
 {
-	Structs::Font_s** SmallFont;
+	Structs::Font_s** Font;
 
 	void DrawFPS()
 	{
-		if (!*SmallFont)
+		if (!*Font)
 			return;
 
 		float fps_colour_good[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
@@ -26,21 +26,21 @@ namespace Drawing
 			: fps_colour_bad;
 
 		const char* fps_string = Utils::String::Va("%i", fps);
-		Symbols::R_AddCmdDrawText(fps_string, std::numeric_limits<int>::max(), *SmallFont, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, fps_colour, 3);
+		Symbols::R_AddCmdDrawText(fps_string, MAX_CHARS, *Font, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, fps_colour, 3);
 	}
 
 	void DrawWatermark()
 	{
-		if (!*SmallFont)
+		if (!*Font)
 			return;
 
 		const float colour[4] = { 1.0f, 1.0f, 1.0f, 0.25f };
 
 		const char* text = "Modification by kittyist";
-		Symbols::R_AddCmdDrawText(text, std::numeric_limits<int>::max(), *SmallFont, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f, colour, 3);
+		Symbols::R_AddCmdDrawText(text, MAX_CHARS, *Font, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f, colour, 3);
 
-		const char* date_string = Utils::String::Va("Date: %s", Utils::String::GetTimeAndDate());
-		Symbols::R_AddCmdDrawText(date_string, std::numeric_limits<int>::max(), *SmallFont, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f, colour, 3);
+		const char* date_string = Utils::String::Va("Time: %s", Utils::String::GetTime());
+		Symbols::R_AddCmdDrawText(date_string, MAX_CHARS, *Font, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f, colour, 3);
 	}
 
 	Utils::Hook::Detour CL_DrawScreen_Hook;
@@ -58,7 +58,7 @@ namespace Drawing
 
 	void RegisterHooks()
 	{
-		SmallFont = reinterpret_cast<Structs::Font_s**>(0x842CE7E8);
+		Font = (Structs::Font_s**)0x842CE7E8; // fonts/720/smallfont
 
 		CL_DrawScreen_Hook.Create(0x8232BA80, CL_DrawScreen);
 	}

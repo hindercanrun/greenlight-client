@@ -17,7 +17,7 @@ namespace Utils
 			return buf;
 		}
 
-		const char* GetTimeAndDate()
+		const char* GetTime()
 		{
 			static char buf[16];
 
