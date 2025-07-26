@@ -57,9 +57,9 @@ namespace DevGui
 		DevGui_GetScreenYPad_Hook.Create(0x8238B588, DevGui_GetScreenYPad);
 
 		// Add our custom Dev Gui.
-		CL_DevGuiFrame_Hook.Create(0x82307620, CL_DevGuiFrame);
-		Com_LoadLevelFastFiles_Hook.Create(0x824BCCF8, Com_LoadLevelFastFiles);
-		Com_LoadUiFastFile_Hook.Create(0x824BCC00, Com_LoadUiFastFile);
+		//CL_DevGuiFrame_Hook.Create(0x82307620, CL_DevGuiFrame);
+		//Com_LoadLevelFastFiles_Hook.Create(0x824BCCF8, Com_LoadLevelFastFiles);
+		//Com_LoadUiFastFile_Hook.Create(0x824BCC00, Com_LoadUiFastFile);
 	}
 
 	void UnregisterHooks()
