@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Components">
+      <UniqueIdentifier>{a638b87b-601c-4080-ba52-531a4e474924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Modules">
+      <UniqueIdentifier>{ff24765a-80e5-4226-8f11-8f550c92231e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{835ef767-8306-4667-ab66-998da79ee238}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Structures">
+      <UniqueIdentifier>{d99516de-85cb-429e-bee1-11a13d6bf9b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Utils">
+      <UniqueIdentifier>{3795c03c-8926-4ce6-aa5f-63e4b3567224}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Main.cpp" />
+    <ClCompile Include="..\Components\Modules\Branding.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Loader.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utils\Hook.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utils\String.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Modules\Drawing.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Dvars.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Game\Symbols.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Modules\LUI.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Components\Modules\Branding.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\components\Loader.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Std_Include.h" />
+    <ClInclude Include="..\utils\String.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\utils\Hook.h">
+      <Filter>Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\Drawing.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\Symbols.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\Dvars.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\structures\Structs.h">
+      <Filter>Game\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\game\structures\Assets.h">
+      <Filter>Game\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\LUI.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
