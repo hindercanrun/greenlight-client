@@ -43,6 +43,9 @@
     <ClCompile Include="..\Components\Modules\LUI.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\Components\Modules\DevGui.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Components\Modules\Branding.h">
@@ -74,6 +77,9 @@
       <Filter>Game\Structures</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\LUI.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\DevGui.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
   </ItemGroup>

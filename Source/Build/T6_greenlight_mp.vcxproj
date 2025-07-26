@@ -116,6 +116,7 @@
   <ItemGroup>
     <ClCompile Include="..\Components\Loader.cpp" />
     <ClCompile Include="..\Components\Modules\Branding.cpp" />
+    <ClCompile Include="..\Components\Modules\DevGui.cpp" />
     <ClCompile Include="..\Components\Modules\Drawing.cpp" />
     <ClCompile Include="..\Components\Modules\LUI.cpp" />
     <ClCompile Include="..\Game\Dvars.cpp" />
@@ -127,6 +128,7 @@
   <ItemGroup>
     <ClInclude Include="..\components\Loader.h" />
     <ClInclude Include="..\Components\Modules\Branding.h" />
+    <ClInclude Include="..\Components\Modules\DevGui.h" />
     <ClInclude Include="..\Components\Modules\Drawing.h" />
     <ClInclude Include="..\Components\Modules\LUI.h" />
     <ClInclude Include="..\game\Dvars.h" />
