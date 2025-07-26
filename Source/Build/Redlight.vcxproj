@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}</ProjectGuid>
     <Keyword>Xbox360Proj</Keyword>
-    <ProjectName>T6_greenlight_mp</ProjectName>
+    <ProjectName>Redlight</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" Label="Configuration">
@@ -43,16 +43,16 @@
     <RemoteRoot>hdd:\</RemoteRoot>
     <OutDir>$(ProjectDir)Output\Bin\Release\</OutDir>
     <IntDir>$(ProjectDir)Output\Obj\Release\</IntDir>
-    <OutputFile>Output\Bin\Release\T6_greenlight_mp.exe</OutputFile>
-    <ImageXexOutput>Output\Bin\Release\T6_greenlight_mp.xex</ImageXexOutput>
+    <OutputFile>Output\Bin\Release\Redlight.exe</OutputFile>
+    <ImageXexOutput>Output\Bin\Release\Redlight.xex</ImageXexOutput>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">
     <LinkIncremental>false</LinkIncremental>
     <RemoteRoot>hdd:\</RemoteRoot>
     <OutDir>$(ProjectDir)Output\Bin\Debug\</OutDir>
     <IntDir>$(ProjectDir)Output\Obj\Debug\</IntDir>
-    <OutputFile>Output\Bin\Debug\T6_greenlight_mp.exe</OutputFile>
-    <ImageXexOutput>Output\Bin\Debug\T6_greenlight_mp.xex</ImageXexOutput>
+    <OutputFile>Output\Bin\Debug\Redlight.exe</OutputFile>
+    <ImageXexOutput>Output\Bin\Debug\Redlight.xex</ImageXexOutput>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
     <ClCompile>
@@ -75,7 +75,7 @@
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDatabaseFile>Output\Bin\Release\T6_greenlight_mp.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Output\Bin\Release\Redlight.pdb</ProgramDatabaseFile>
       <SetChecksum>true</SetChecksum>
       <AdditionalDependencies>xapilib.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xboxkrnl.lib;xnet.lib;xaudio2.lib;xact3ltcg.lib;x3daudioltcg.lib;xmcoreltcg.lib;vcomp.lib</AdditionalDependencies>
       <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
@@ -104,7 +104,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <ProgramDatabaseFile>Output\Bin\Release\T6_greenlight_mp.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>Output\Bin\Debug\Redlight.pdb</ProgramDatabaseFile>
       <SetChecksum>true</SetChecksum>
       <AdditionalDependencies>xapilib.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xboxkrnl.lib;xnet.lib;xaudio2.lib;xact3ltcg.lib;x3daudioltcg.lib;xmcoreltcg.lib;vcomp.lib</AdditionalDependencies>
       <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>

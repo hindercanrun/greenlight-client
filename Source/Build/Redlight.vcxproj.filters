@@ -54,29 +54,29 @@
     <ClInclude Include="..\Components\Modules\Branding.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\components\Loader.h">
+    <ClInclude Include="..\Components\Loader.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="..\Std_Include.h" />
-    <ClInclude Include="..\utils\String.h">
+    <ClInclude Include="..\Utils\String.h">
       <Filter>Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\utils\Hook.h">
+    <ClInclude Include="..\Utils\Hook.h">
       <Filter>Utils</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\Drawing.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\Symbols.h">
+    <ClInclude Include="..\Game\Symbols.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\Dvars.h">
+    <ClInclude Include="..\Game\Dvars.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\structures\Structs.h">
+    <ClInclude Include="..\Game\Structures\Structs.h">
       <Filter>Game\Structures</Filter>
     </ClInclude>
-    <ClInclude Include="..\game\structures\Assets.h">
+    <ClInclude Include="..\Game\Structures\Assets.h">
       <Filter>Game\Structures</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\LUI.h">
