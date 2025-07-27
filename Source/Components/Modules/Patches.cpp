@@ -58,6 +58,13 @@ namespace Patches
 
 		// Redirect the console log file
 		Utils::Hook::SetString(0x8207A8A4, "Mod/Logs/Console.log");
+
+		// Below are just your general string edits.
+		// Example:
+		// Utils::Hook::SetString(<address>, <string>); // <comment> (optional)
+
+		Utils::Hook::SetString(0x8218A174, "Creating Direct3D device...\n\n"); // Add a newline for cleaner logging
+		Utils::Hook::SetString(0x8218A5D4, "Couldn't create a Direct3D device: %s\n\n"); // Add a newline for cleaner logging
 	}
 
 	void UnregisterHooks()
