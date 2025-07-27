@@ -36,7 +36,7 @@ namespace Drawing
 
 		const float colour[4] = { 1.0f, 1.0f, 1.0f, 0.25f };
 
-		const char* text = "Modification by kittyist";
+		const char* text = "Redlight";
 		Symbols::R_AddCmdDrawText(text, MAX_CHARS, *Font, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f, colour, 3);
 
 		const char* date_string = Utils::String::Va("Time: %s", Utils::String::GetTime());
