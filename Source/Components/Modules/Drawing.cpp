@@ -8,39 +8,42 @@ namespace Drawing
 {
 	Structs::Font_s** Font;
 
-	void DrawFPS()
+	void DrawModFPS()
 	{
 		if (!*Font)
+		{
 			return;
+		}
 
-		float fps_colour_good[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
-		float fps_colour_ok[4] = {1.0f, 0.7f, 0.3f, 1.0f};
-		float fps_colour_bad[4] = {1.0f, 0.3f, 0.3f, 1.0f};
-		float fps_colour_very_bad[4] = { 1.0f, 0.1f, 0.1f, 1.0f };
+		float ColourGood[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
+		float ColourOkay[4] = { 1.0f, 0.7f, 0.3f, 1.0f };
+		float ColourBad[4]  = { 1.0f, 0.3f, 0.3f, 1.0f };
 
-		int fps = (int)(float)(1000.0 / Symbols::cg_perfInfo->frame.average);
-		const float* fps_colour = (fps >= 60)
-			? fps_colour_good
-			: (fps > 50)
-			? fps_colour_ok
-			: fps_colour_bad;
+		int Count = (int)(1000.0 / Symbols::cg_perfInfo->frame.average);
+		float* TextColour = (Count >= 60)
+			? ColourGood
+			: (Count > 50)
+			? ColourOkay
+			: ColourBad;
 
-		const char* fps_string = Utils::String::Va("%i", fps);
-		Symbols::R_AddCmdDrawText(fps_string, MAX_CHARS, *Font, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, fps_colour, 3);
+		const char* TextString = Utils::String::Va("%i", Count); // Example: '60'
+		Symbols::R_AddCmdDrawText(TextString, MAX_CHARS, *Font, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, TextColour, 3);
 	}
 
-	void DrawWatermark()
+	void DrawModWatermark()
 	{
 		if (!*Font)
+		{
 			return;
+		}
 
-		const float colour[4] = { 1.0f, 1.0f, 1.0f, 0.25f };
+		float TextColour[4] = { 1.0f, 1.0f, 1.0f, 0.25f };
 
-		const char* text = "Redlight";
-		Symbols::R_AddCmdDrawText(text, MAX_CHARS, *Font, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f, colour, 3);
+		const char* BrandingString = "Redlight";
+		Symbols::R_AddCmdDrawText(BrandingString, MAX_CHARS, *Font, 2.0f, 700.0f, 0.8f, 0.8f, 0.0f, TextColour, 3);
 
-		const char* date_string = Utils::String::Va("Time: %s", Utils::String::GetTime());
-		Symbols::R_AddCmdDrawText(date_string, MAX_CHARS, *Font, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f, colour, 3);
+		const char* TimeString = Utils::String::Va("Time: %s", Utils::String::GetTime());
+		Symbols::R_AddCmdDrawText(TimeString, MAX_CHARS, *Font, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f, TextColour, 3);
 	}
 
 	Utils::Hook::Detour CL_DrawScreen_Hook;
@@ -48,9 +51,14 @@ namespace Drawing
 	{
 		Dvars::register_dvars();
 		if (Dvars::mod_drawFPS->current.enabled)
-			DrawFPS();
+		{
+			DrawModFPS();
+		}
+
 		if (Dvars::mod_drawWatermark->current.enabled)
-			DrawWatermark();
+		{
+			DrawModWatermark();
+		}
 
 		auto Invoke = CL_DrawScreen_Hook.Invoke<void(*)(int)>();
 		Invoke(localClientNum);
