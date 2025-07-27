@@ -62,7 +62,7 @@ namespace Symbols
 
 	Material_RegisterHandle_t Material_RegisterHandle = Material_RegisterHandle_t(0x829E2BB8);
 
-	Sys_DefaultInstallPath_t Sys_DefaultInstallPath = Sys_DefaultInstallPath_t(0x825B43F0);
+	Sys_Milliseconds_t Sys_Milliseconds = Sys_Milliseconds_t(0x825DC628);
 
 	R_AddCmdDrawStretchPic_t R_AddCmdDrawStretchPic = R_AddCmdDrawStretchPic_t(0x829E66F0);
 	R_AddCmdDrawText_t R_AddCmdDrawText = R_AddCmdDrawText_t(0x829E6C38);

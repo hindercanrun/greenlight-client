@@ -141,8 +141,8 @@ namespace Symbols
 	typedef Structs::Material* (*Material_RegisterHandle_t)(const char* name, int imageTrack);
 	extern Material_RegisterHandle_t Material_RegisterHandle;
 
-	typedef const char* (*Sys_DefaultInstallPath_t)();
-	extern Sys_DefaultInstallPath_t Sys_DefaultInstallPath;
+	typedef DWORD (*Sys_Milliseconds_t)();
+	extern Sys_Milliseconds_t Sys_Milliseconds;
 
 	typedef void (*R_AddCmdDrawStretchPic_t)(float x, float y, float w, float h, float s0, float t0, float s1, float t1, const float* colour, Structs::Material* material);
 	extern R_AddCmdDrawStretchPic_t R_AddCmdDrawStretchPic;
