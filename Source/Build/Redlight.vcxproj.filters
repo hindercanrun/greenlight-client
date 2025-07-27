@@ -19,9 +19,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Components\Modules\Branding.cpp">
-      <Filter>Components\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\Components\Loader.cpp">
       <Filter>Components</Filter>
     </ClCompile>
@@ -51,9 +48,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Components\Modules\Branding.h">
-      <Filter>Components\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\Components\Loader.h">
       <Filter>Components</Filter>
     </ClInclude>

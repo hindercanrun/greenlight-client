@@ -61,6 +61,9 @@ namespace Drawing
 		Font = (Structs::Font_s**)0x842CE7E8; // fonts/720/smallfont
 
 		CL_DrawScreen_Hook.Create(0x8232BA80, CL_DrawScreen);
+
+		Utils::Hook::SetValue(0x82249CC8, 0x4E800020); // 'Nop' CG_DrawVersion so it doesn't show
+		Utils::Hook::SetValue(0x825390D8, 0x4E800020); // 'Nop' UI_DrawBuildNumber so it doesn't show
 	}
 
 	void UnregisterHooks()
