@@ -42,18 +42,6 @@ namespace Symbols
 	typedef Structs::XAssetHeader (*DB_FindXAssetHeader_t)(Structs::XAssetType type, const char* name, bool errorIfMissing, int waitTime);
 	extern DB_FindXAssetHeader_t DB_FindXAssetHeader;
 
-	typedef void (*DB_LoadXAssets_t)(Structs::XZoneInfo* zoneInfo, unsigned int zoneCount, int sync);
-	extern DB_LoadXAssets_t DB_LoadXAssets;
-
-	typedef bool (*DevGui_IsActive_t)();
-	extern DevGui_IsActive_t DevGui_IsActive;
-
-	typedef int (*Dvar_Command_t)();
-	extern Dvar_Command_t Dvar_Command;
-
-	typedef int (*SV_GameCommand_t)();
-	extern SV_GameCommand_t SV_GameCommand;
-
 	typedef const Structs::dvar_t* (*Dvar_FindVar_t)(const char* dvar);
 	extern Dvar_FindVar_t Dvar_FindVar;
 
@@ -105,7 +93,7 @@ namespace Symbols
 	typedef int (*FS_FOpenFileRead_t)(const char* filename, int* file);
 	extern FS_FOpenFileRead_t FS_FOpenFileRead;
 
-	typedef int (*FS_FOpenFileByMode_t)(const char *qpath, int* f, Structs::fsMode_t mode);
+	typedef int (*FS_FOpenFileByMode_t)(const char* qpath, int* f, Structs::fsMode_t mode);
 	extern FS_FOpenFileByMode_t FS_FOpenFileByMode;
 
 	typedef int (*FS_FOpenTextFileWrite_t)(const char* filename);
@@ -117,29 +105,11 @@ namespace Symbols
 	typedef void (*FS_FCloseFile_t)(int h);
 	extern FS_FCloseFile_t FS_FCloseFile;
 
-	typedef bool (*Key_IsCatcherActive_t)(int localClientNum, int mask);
-	extern Key_IsCatcherActive_t Key_IsCatcherActive;
-
-	typedef void (*Key_RemoveCatcher_t)(int localClientNum, int andMask);
-	extern Key_RemoveCatcher_t Key_RemoveCatcher;
-
-	typedef int (*LiveContracts_GetVersion_t)();
-	extern LiveContracts_GetVersion_t LiveContracts_GetVersion;
-
-	typedef int (*LiveStorage_GetFFOTDVersion_t)();
-	extern LiveStorage_GetFFOTDVersion_t LiveStorage_GetFFOTDVersion;
-
-	typedef int (*Playlist_GetVersionNumber_t)();
-	extern Playlist_GetVersionNumber_t Playlist_GetVersionNumber;
-
 	typedef void (*LUI_CoD_Init_t)(bool frontend);
 	extern LUI_CoD_Init_t LUI_CoD_Init;
 
 	typedef void (*LUI_CoD_Shutdown_t)();
 	extern LUI_CoD_Shutdown_t LUI_CoD_Shutdown;
-
-	typedef Structs::Material* (*Material_RegisterHandle_t)(const char* name, int imageTrack);
-	extern Material_RegisterHandle_t Material_RegisterHandle;
 
 	typedef DWORD (*Sys_Milliseconds_t)();
 	extern Sys_Milliseconds_t Sys_Milliseconds;
@@ -169,7 +139,7 @@ namespace Symbols
 	extern I_strncat_t I_strncat;
 
 	// Variables
-	extern Structs::ScreenPlacement* scrPlaceFullUnsafe;
-
 	extern Structs::CG_PerfInfo* cg_perfInfo;
+
+	extern Structs::ScreenPlacement* scrPlaceFullUnsafe;
 }
