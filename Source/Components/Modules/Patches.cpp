@@ -28,9 +28,28 @@ namespace Patches
 		Invoke();
 	}
 
+	Utils::Hook::Detour DebugReportProfileVars_Hook;
+	void DebugReportProfileVars(int controllerIndex, const char* fmt, ...)
+	{
+		char buf[256];
+
+		va_list args;
+		va_start(args, fmt);
+		vsnprintf(buf, sizeof(buf), fmt, args);
+		va_end(args);
+
+		Symbols::Com_Printf(33, "%s\n", buf);
+
+		auto Invoke = DebugReportProfileVars_Hook.Invoke<void(*)(int, const char*)>();
+		Invoke(controllerIndex, fmt);
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
+
+		Utils::Hook::SetValue(0x82483100, 0x60000000); // Nop first Com_Printf in DebugReportProfileVars then call our hook.
+		DebugReportProfileVars_Hook.Create(0x824830D8, DebugReportProfileVars); // Readd variadic formatting to fix formatting.
 
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
@@ -43,6 +62,8 @@ namespace Patches
 
 	void UnregisterHooks()
 	{
+		FS_InitFilesystem_Hook.Remove();
+		DebugReportProfileVars_Hook.Remove();
 	}
 
 	void Load()
