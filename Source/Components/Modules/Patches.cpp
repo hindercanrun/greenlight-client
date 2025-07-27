@@ -67,6 +67,8 @@ namespace Patches
 
 		Com_ExecStartupConfigs_Hook.Create(0x824B8550, Com_ExecStartupConfigs); // Make this only run once to prevent unneeded duplicate executing.
 
+		Utils::Hook::SetValue(0x82316110, 0x60000000); // Nop LiveStorage_WaitOnStats to prevent delay on loading levels.
+
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
 		*(char*)0x8207A8DC = '\0'; // Remove 'exe name' from the log file
