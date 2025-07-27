@@ -127,27 +127,6 @@ namespace Structs
 		dvar_t* hashNext;
 	};
 
-	enum bdLogMessageType : __int32
-	{
-		BD_LOG_INFO = 0x0,
-		BD_LOG_WARNING = 0x1,
-		BD_LOG_ERROR = 0x2,
-	};
-
-	enum scriptInstance_t : __int32
-	{
-		SCRIPTINSTANCE_SERVER = 0x0,
-		SCRIPTINSTANCE_CLIENT = 0x1,
-		SCRIPT_INSTANCE_MAX = 0x2,
-	};
-
-	struct fileRetryInfo
-	{
-		int lastAttemptTime;
-		int lastAttemptInterval;
-		int retryCount;
-	};
-
 	struct ScreenPlacement
 	{
 		float scaleVirtualToReal[2];

@@ -4,6 +4,7 @@ namespace Structs
 {
 	struct Material
 	{
+		// Empty for now
 	};
 
 	struct Glyph

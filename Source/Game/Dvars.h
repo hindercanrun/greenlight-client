@@ -2,14 +2,11 @@
 
 namespace Dvars
 {
-	// First declare the Dvars.
+	// First declare the DVars.
 
-	// Custom dvars
+	// Custom DVars
 	extern const Structs::dvar_t* mod_drawFPS;
 	extern const Structs::dvar_t* mod_drawWatermark;
-
-	// Game dvars
-	// None for now.
 
 	// Now lets register them.
 	void register_dvars();
