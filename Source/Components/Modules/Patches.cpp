@@ -44,12 +44,28 @@ namespace Patches
 		Invoke(controllerIndex, fmt);
 	}
 
+	Utils::Hook::Detour Com_ExecStartupConfigs_Hook;
+	void Com_ExecStartupConfigs(int localClientNum, const char* configFile)
+	{
+		static bool alreadyExecuted = false;
+		if (alreadyExecuted)
+		{
+			return;
+		}
+		alreadyExecuted = true;
+
+		auto Invoke = Com_ExecStartupConfigs_Hook.Invoke<void(*)(int, const char*)>();
+		Invoke(localClientNum, configFile);
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
 
 		Utils::Hook::SetValue(0x82483100, 0x60000000); // Nop first Com_Printf in DebugReportProfileVars then call our hook.
 		DebugReportProfileVars_Hook.Create(0x824830D8, DebugReportProfileVars); // Readd variadic formatting to fix formatting.
+
+		Com_ExecStartupConfigs_Hook.Create(0x824B8550, Com_ExecStartupConfigs); // Make this only run once to prevent unneeded duplicate executing.
 
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
