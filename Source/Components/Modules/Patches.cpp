@@ -83,6 +83,7 @@ namespace Patches
 
 		Utils::Hook::SetString(0x8218A174, "Creating Direct3D device...\n\n"); // Add a newline for cleaner logging
 		Utils::Hook::SetString(0x8218A5D4, "Couldn't create a Direct3D device: %s\n\n"); // Add a newline for cleaner logging
+		Utils::Hook::SetString(0x82091F00, "GUMP(%s): %s"); // Remove newline for cleaner logging
 	}
 
 	void UnregisterHooks()
