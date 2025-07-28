@@ -46,6 +46,9 @@
     <ClCompile Include="..\Components\Modules\Patches.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\Components\Modules\Localized_Strings.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Components\Loader.h">
@@ -80,6 +83,9 @@
       <Filter>Components\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\Patches.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\Localized_Strings.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
   </ItemGroup>

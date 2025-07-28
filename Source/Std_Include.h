@@ -15,6 +15,8 @@
 #include <cstdint>
 #include <iostream>
 #include <ctime>
+#include <string>
+#include <unordered_map>
 
 #include <xtl.h>
 #include <stdint.h>

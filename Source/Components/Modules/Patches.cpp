@@ -1,6 +1,7 @@
 #include "../../Std_Include.h"
-#include "Patches.h"
 #include "../Loader.h"
+#include "Patches.h"
+#include "Localized_Strings.h"
 
 #include "../../Utils/Hook.h"
 
@@ -95,6 +96,14 @@ namespace Patches
 
 		Utils::Hook::SetValue(0x829D98EC, 0x38800000); // Force r_vsync to 0
 		Utils::Hook::SetValue(0x824B6F40, 0x38800000); // Force com_maxfps to 0
+
+		// Below are just your general localized string edits.
+		// Example:
+		// Localized_Strings::Override(string>, <string>); // <comment> (optional)
+
+		// Change the offline MOTD to be our own one
+		Localized_Strings::Override("TICKER_MESSAGE_CATEGORY_COD_CAPS", "Mod:");
+		Localized_Strings::Override("TICKER_MESSAGE_DEFAULT_OFFLINE", "Redlight - Game Modification For Greenlight!");
 	}
 
 	void UnregisterHooks()
