@@ -122,6 +122,8 @@ namespace Patches
 		*(char*)0x8207A8DC = '\0'; // Remove 'exe name' from the log file
 		*(char*)0x8207A8BC = '\0'; // Remove unneeded build info + timestamp from the log file
 
+		*(char*)0x82029960 = '\0'; // Remove 'Build 363 xenon' from the console window as it's not needed
+
 		// Redirect the console log file
 		Utils::Hook::SetString(0x8207A8A4, "Mod/Logs/Console.log");
 
