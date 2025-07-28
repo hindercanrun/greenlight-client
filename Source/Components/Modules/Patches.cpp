@@ -84,6 +84,13 @@ namespace Patches
 		Utils::Hook::SetString(0x8218A174, "Creating Direct3D device...\n\n"); // Add a newline for cleaner logging
 		Utils::Hook::SetString(0x8218A5D4, "Couldn't create a Direct3D device: %s\n\n"); // Add a newline for cleaner logging
 		Utils::Hook::SetString(0x82091F00, "GUMP(%s): %s"); // Remove newline for cleaner logging
+
+		// Below are just your general dvar value edits.
+		// Example:
+		// Utils::Hook::SetValue(<address>, <value>); // <comment> (optional)
+
+		Utils::Hook::SetValue(0x829D98EC, 0x38800000); // Force r_vsync to 0
+		Utils::Hook::SetValue(0x824B6F40, 0x38800000); // Force com_maxfps to 0
 	}
 
 	void UnregisterHooks()
