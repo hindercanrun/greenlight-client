@@ -59,6 +59,51 @@ namespace Patches
 		Invoke(localClientNum, configFile);
 	}
 
+#define TAB_SIZE	4
+	char* FixTab(const char* input, char* outBuf, int outBufSize)
+	{
+		int col = 0;
+		int outPos = 0;
+
+		for (int i = 0; input[i] != '\0' && outPos < outBufSize - 1; ++i)
+		{
+			if (input[i] == '\t')
+			{
+				int spaces = TAB_SIZE - (col % TAB_SIZE);
+				for (int s = 0; s < spaces && outPos < outBufSize - 1; ++s)
+				{
+					outBuf[outPos++] = ' ';
+					col++;
+				}
+			}
+			else
+			{
+				outBuf[outPos++] = input[i];
+				if (input[i] == '\n')
+				{
+					col = 0;
+				}
+				else
+				{
+					col++;
+				}
+			}
+		}
+		outBuf[outPos] = '\0';
+		return outBuf;
+	}
+
+	Utils::Hook::Detour CL_ConsolePrint_AddLine_Hook;
+	char CL_ConsolePrint_AddLine(int localClientNum, int channel, const char* txt, int duration, int pixelWidth, char colour, int flags)
+	{
+#define EXPANDED_BUF_SIZE	4096
+		static char expanded_txt[EXPANDED_BUF_SIZE];
+		FixTab(txt, expanded_txt, sizeof(expanded_txt));
+
+		auto Invoke = CL_ConsolePrint_AddLine_Hook.Invoke<char(*)(int, int, const char*, int, int, char, int)>();
+		return Invoke(localClientNum, channel, expanded_txt, duration, pixelWidth, colour, flags);
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
@@ -67,6 +112,8 @@ namespace Patches
 		DebugReportProfileVars_Hook.Create(0x824830D8, DebugReportProfileVars); // Readd variadic formatting to fix formatting.
 
 		Com_ExecStartupConfigs_Hook.Create(0x824B8550, Com_ExecStartupConfigs); // Make this only run once to prevent unneeded duplicate executing.
+
+		CL_ConsolePrint_AddLine_Hook.Create(0x822FF2C8, CL_ConsolePrint_AddLine); // Fix \t showing as []
 
 		Utils::Hook::SetValue(0x82316110, 0x60000000); // Nop LiveStorage_WaitOnStats to prevent delay on loading levels.
 
