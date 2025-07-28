@@ -77,6 +77,10 @@ namespace Patches
 		// Redirect the console log file
 		Utils::Hook::SetString(0x8207A8A4, "Mod/Logs/Console.log");
 
+		// Redirect some configs
+		Utils::Hook::SetString(0x82079134, "Mod/Configs/Config.cfg");
+		Utils::Hook::SetString(0x8207C0B0, "exec_addtext Mod/Configs/Autoexec_Dev_Mp.cfg");
+
 		// Below are just your general string edits.
 		// Example:
 		// Utils::Hook::SetString(<address>, <string>); // <comment> (optional)
