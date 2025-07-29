@@ -49,6 +49,12 @@
     <ClCompile Include="..\Components\Modules\Localized_Strings.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
+    <ClCompile Include="..\Components\Modules\Dumping.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Utils\FileSystem.cpp">
+      <Filter>Utils</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Components\Loader.h">
@@ -87,6 +93,12 @@
     </ClInclude>
     <ClInclude Include="..\Components\Modules\Localized_Strings.h">
       <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\Dumping.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Utils\FileSystem.h">
+      <Filter>Utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,8 +18,10 @@ namespace Symbols
 	Com_PrintWarning_t Com_PrintWarning = Com_PrintWarning_t(0x824BA5D0);
 	Com_PrintError_t Com_PrintError = Com_PrintError_t(0x824BA4D0);
 	Com_sprintf_t Com_sprintf = Com_sprintf_t(0x825B0818);
+	Com_HashKey_t Com_HashKey = Com_HashKey_t(0x82593C78);
 
 	DB_FindXAssetHeader_t DB_FindXAssetHeader = DB_FindXAssetHeader_t(0x82382240);
+	DB_GetAllXAssetOfType_FastFile_t DB_GetAllXAssetOfType_FastFile = DB_GetAllXAssetOfType_FastFile_t(0x82379908);
 
 	Dvar_FindVar_t Dvar_FindVar = Dvar_FindVar_t(0x8259D7C8);
 	Dvar_RegisterBool_t Dvar_RegisterBool = Dvar_RegisterBool_t(0x825A1EF8);

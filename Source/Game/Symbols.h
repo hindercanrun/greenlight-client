@@ -39,8 +39,14 @@ namespace Symbols
 	typedef int (*Com_sprintf_t)(char* dest, unsigned int size, const char* fmt, ...);
 	extern Com_sprintf_t Com_sprintf;
 
+	typedef int (*Com_HashKey_t)(const char* string, int maxlen);
+	extern Com_HashKey_t Com_HashKey;
+
 	typedef Structs::XAssetHeader (*DB_FindXAssetHeader_t)(Structs::XAssetType type, const char* name, bool errorIfMissing, int waitTime);
 	extern DB_FindXAssetHeader_t DB_FindXAssetHeader;
+
+	typedef int (*DB_GetAllXAssetOfType_FastFile_t)(Structs::XAssetType type, Structs::XAssetHeader *assets, int maxCount);
+	extern DB_GetAllXAssetOfType_FastFile_t DB_GetAllXAssetOfType_FastFile;
 
 	typedef const Structs::dvar_t* (*Dvar_FindVar_t)(const char* dvar);
 	extern Dvar_FindVar_t Dvar_FindVar;

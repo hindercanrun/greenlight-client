@@ -7,6 +7,52 @@ namespace Structs
 		// Empty for now
 	};
 
+	typedef struct Bounds
+	{
+		float midPoint[3];
+		float halfSize[3];
+	} Bounds;
+
+	typedef struct TriggerModel
+	{
+		int contents;
+		unsigned short hullCount;
+		unsigned short firstHull;
+	} TriggerModel;
+
+	typedef struct TriggerHull
+	{
+		Bounds bounds;
+		int contents;
+		unsigned short slabCount;
+		unsigned short firstSlab;
+	} TriggerHull;
+
+	typedef struct TriggerSlab
+	{
+		float dir[3];
+		float midPoint;
+		float halfSize;
+	} TriggerSlab;
+
+	typedef struct MapTriggers
+	{
+		unsigned int count;
+		TriggerModel* models;
+		unsigned int hullCount;
+		TriggerHull* hulls;
+		unsigned int slabCount;
+		TriggerSlab* slabs;
+	} MapTriggers;
+
+	typedef struct MapEnts
+	{
+		const char* name;
+		char* entityString;
+		int numEntityChars;
+		MapTriggers trigger;
+	} MapEnts;
+
 	struct Glyph
 	{
 		unsigned __int16 letter;
@@ -31,21 +77,68 @@ namespace Structs
 		Glyph* glyphs;
 	};
 
-	struct RawFile
+	typedef struct LocalizeEntry
+	{
+		const char* value;
+		const char* name;
+	} LocalizeEntry;
+
+	typedef struct RawFile
 	{
 		const char* name;
 		int len;
 		const char* buffer;
-	};
+	} RawFile;
 
-	union XAssetHeader
+	typedef struct StringTableCell
 	{
-		Font_s* font;
-		RawFile* rawfile;
-		void* data;
-	};
+		const char* string;
+		int hash;
+	} StringTableCell;
 
-	enum XAssetType : __int32
+	typedef struct StringTable
+	{
+		const char* name;
+		int columnCount;
+		int rowCount;
+		StringTableCell* values;
+		short* cellIndex;
+	} StringTable;
+
+	typedef struct ScriptParseTree
+	{
+		const char* name;
+		int len;
+		const char* buffer;
+	} ScriptParseTree;
+
+	typedef struct KeyValuePair
+	{
+		int keyHash;
+		int namespaceHash;
+		const char* value;
+	} KeyValuePair;
+
+	typedef struct KeyValuePairs
+	{
+		const char* name;
+		int numVariables;
+		KeyValuePair* keyValuePairs;
+	} KeyValuePairs;
+
+	typedef union XAssetHeader
+	{
+		MapEnts* mapEnts;
+		Font_s* font;
+		LocalizeEntry* localize;
+		RawFile* rawfile;
+		StringTable* stringTable;
+		ScriptParseTree* scriptParseTree;
+		KeyValuePairs* keyValuePairs;
+		void* data;
+	} XAssetHeader;
+
+	typedef enum XAssetType
 	{
 		ASSET_TYPE_XMODELPIECES = 0x0,
 		ASSET_TYPE_PHYSPRESET = 0x1,
@@ -103,28 +196,21 @@ namespace Structs
 		ASSET_TYPE_COUNT = 0x34,
 		ASSET_TYPE_STRING = 0x35,
 		ASSET_TYPE_ASSETLIST = 0x36,
-	};
+	} XAssetType;
 
-	struct XAsset
+	typedef struct XAsset
 	{
 		XAssetType type;
 		XAssetHeader header;
-	};
+	} XAsset;
 
-	struct XAssetEntry
+	typedef struct XAssetEntry
 	{
 		XAsset asset;
-		unsigned __int8 zoneIndex;
+		unsigned char zoneIndex;
 		bool inuse;
-		unsigned __int16 nextHash;
-		unsigned __int16 nextOverride;
-		unsigned __int16 usageFrame;
-	};
-
-	struct XZoneInfo
-	{
-		const char* name;
-		int allocFlags;
-		int freeFlags;
-	};
+		unsigned short nextHash;
+		unsigned short nextOverride;
+		unsigned short usageFrame;
+	} XAssetEntry;
 }

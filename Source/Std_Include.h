@@ -17,6 +17,7 @@
 #include <ctime>
 #include <string>
 #include <unordered_map>
+#include <direct.h>
 
 #include <xtl.h>
 #include <stdint.h>
