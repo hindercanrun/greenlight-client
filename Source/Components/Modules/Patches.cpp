@@ -129,7 +129,6 @@ namespace Patches
 
 		// Redirect some configs
 		Utils::Hook::SetString(0x82079134, "Redlight/configs/config.cfg");
-		Utils::Hook::SetString(0x8207C0B0, "exec_addtext Redlight/configs/autoexec_dev_mp.cfg");
 
 		// Below are just your general string edits.
 		// Example:
