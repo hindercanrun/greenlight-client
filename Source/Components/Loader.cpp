@@ -1,9 +1,9 @@
 #include "../Std_Include.h"
 #include "Loader.h"
 
+#include "Modules\Assets.h"
 #include "Modules\DevGui.h"
 #include "Modules\Drawing.h"
-#include "Modules\Dumping.h"
 #include "Modules\Localized_Strings.h"
 #include "Modules\LUI.h"
 #include "Modules\Patches.h"
@@ -57,9 +57,9 @@ namespace Loader
 
 	void Load()
 	{
+		RegisterModule("Assets",				Assets::Load,				Assets::Unload);
 		RegisterModule("DevGui",				DevGui::Load,				DevGui::Unload);
 		RegisterModule("Drawing",				Drawing::Load,				Drawing::Unload);
-		RegisterModule("Dumping",				Dumping::Load,				Dumping::Unload);
 		RegisterModule("LUI",					LUI::Load,					LUI::Unload);
 		RegisterModule("Localized Strings",		Localized_Strings::Load,	Localized_Strings::Unload);
 		RegisterModule("Patches",				Patches::Load,				Patches::Unload);

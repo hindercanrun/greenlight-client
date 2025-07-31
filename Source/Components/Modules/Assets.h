@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Dumping
+namespace Assets
 {
 	void Load();
 	void Unload();

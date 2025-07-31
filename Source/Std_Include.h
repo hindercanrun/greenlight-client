@@ -18,6 +18,7 @@
 #include <string>
 #include <unordered_map>
 #include <direct.h>
+#include <fstream>
 
 #include <xtl.h>
 #include <stdint.h>

@@ -125,11 +125,11 @@ namespace Patches
 		*(char*)0x82029960 = '\0'; // Remove 'Build 363 xenon' from the console window as it's not needed
 
 		// Redirect the console log file
-		Utils::Hook::SetString(0x8207A8A4, "Mod/Logs/Console.log");
+		Utils::Hook::SetString(0x8207A8A4, "Redlight/logs/console.log");
 
 		// Redirect some configs
-		Utils::Hook::SetString(0x82079134, "Mod/Configs/Config.cfg");
-		Utils::Hook::SetString(0x8207C0B0, "exec_addtext Mod/Configs/Autoexec_Dev_Mp.cfg");
+		Utils::Hook::SetString(0x82079134, "Redlight/configs/config.cfg");
+		Utils::Hook::SetString(0x8207C0B0, "exec_addtext Redlight/configs/autoexec_dev_mp.cfg");
 
 		// Below are just your general string edits.
 		// Example:

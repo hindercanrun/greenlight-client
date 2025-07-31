@@ -86,5 +86,46 @@ namespace Utils
 				return FALSE;
 			}
 		}
+
+		char* ReadFileToString(const char* filePath)
+		{
+			// Read data
+			FILE* file = fopen(filePath, "rb");
+			if (!file)
+			{
+				Symbols::Com_Printf(0, "ReadFileToString: Failed to open file: %s\n", filePath);
+				return NULL;
+			}
+
+			fseek(file, 0, SEEK_END);
+			long size = ftell(file);
+			rewind(file);
+
+			char* buffer = (char*)malloc(size + 1);
+			if (!buffer)
+			{
+				fclose(file);
+				Symbols::Com_Printf(0, "ReadFileToString: Failed to allocate memory for file: %s\n", filePath);
+				return NULL;
+			}
+
+			fread(buffer, 1, size, file);
+			buffer[size] = '\0';
+
+			fclose(file);
+			return buffer;
+		}
+
+		bool FileExists(const char* filePath)
+		{
+			// Read data
+			FILE* file = fopen(filePath, "r");
+			if (file)
+			{
+				fclose(file);
+				return TRUE;
+			}
+			return FALSE;
+		}
 	}
 }
