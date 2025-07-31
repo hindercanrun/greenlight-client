@@ -110,6 +110,18 @@ namespace Patches
 		*Symbols::logfile = Symbols::FS_FOpenTextFileWrite("Redlight\\logs\\console.log");
 	}
 
+	Utils::Hook::Detour Live_Base_Pump_Hook;
+	void Live_Base_Pump()
+	{
+		return;
+	}
+
+	Utils::Hook::Detour Live_Base_PumpForController_Hook;
+	void Live_Base_PumpForController(int controllerIndex)
+	{
+		return;
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
@@ -124,7 +136,9 @@ namespace Patches
 		Com_OpenLogFile_Hook.Create(0x824B5938, Com_OpenLogFile); // Replace with my own version
 
 		Utils::Hook::SetValue(0x82316110, 0x60000000); // Nop LiveStorage_WaitOnStats to prevent delay on loading levels.
-		Utils::Hook::SetValue(0x8276D2E8, 0x60000000); // Nop Live_Base_PumpForController to stop the game from trying to connect online.
+
+		Live_Base_Pump_Hook.Create(0x82769078, Live_Base_Pump);
+		Live_Base_PumpForController_Hook.Create(0x82768D00, Live_Base_PumpForController);
 
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
