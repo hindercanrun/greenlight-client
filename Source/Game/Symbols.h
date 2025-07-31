@@ -147,5 +147,7 @@ namespace Symbols
 	// Variables
 	extern Structs::CG_PerfInfo* cg_perfInfo;
 
+	extern int* logfile;
+
 	extern Structs::ScreenPlacement* scrPlaceFullUnsafe;
 }

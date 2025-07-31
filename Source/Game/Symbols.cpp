@@ -63,5 +63,7 @@ namespace Symbols
 	// Variables
 	Structs::CG_PerfInfo* cg_perfInfo = reinterpret_cast<Structs::CG_PerfInfo*>(0x82DC3A40);
 
+	int* logfile = reinterpret_cast<int*>(0x839FF50C);
+
 	Structs::ScreenPlacement* scrPlaceFullUnsafe = reinterpret_cast<Structs::ScreenPlacement*>(0x82EA7478);
 }

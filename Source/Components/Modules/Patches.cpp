@@ -104,6 +104,12 @@ namespace Patches
 		return Invoke(localClientNum, channel, expanded_txt, duration, pixelWidth, colour, flags);
 	}
 
+	Utils::Hook::Detour Com_OpenLogFile_Hook;
+	void Com_OpenLogFile()
+	{
+		*Symbols::logfile = Symbols::FS_FOpenTextFileWrite("Redlight\\logs\\console.log");
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
@@ -115,7 +121,10 @@ namespace Patches
 
 		CL_ConsolePrint_AddLine_Hook.Create(0x822FF2C8, CL_ConsolePrint_AddLine); // Fix \t showing as []
 
+		Com_OpenLogFile_Hook.Create(0x824B5938, Com_OpenLogFile); // Replace with my own version
+
 		Utils::Hook::SetValue(0x82316110, 0x60000000); // Nop LiveStorage_WaitOnStats to prevent delay on loading levels.
+		Utils::Hook::SetValue(0x8276D2E8, 0x60000000); // Nop Live_Base_PumpForController to prevent pumping spam.
 
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
@@ -135,7 +144,7 @@ namespace Patches
 		// Utils::Hook::SetString(<address>, <string>); // <comment> (optional)
 
 		Utils::Hook::SetString(0x8218A174, "Creating Direct3D device...\n\n"); // Add a newline for cleaner logging
-		Utils::Hook::SetString(0x8218A5D4, "Couldn't create a Direct3D device: %s\n\n"); // Add a newline for cleaner logging
+		Utils::Hook::SetString(0x8218A5D4, "Couldn't create Direct3D device: %s\n\n"); // Add a newline for cleaner logging
 		Utils::Hook::SetString(0x82091F00, "GUMP(%s): %s"); // Remove newline for cleaner logging
 
 		// Below are just your general dvar value edits.
