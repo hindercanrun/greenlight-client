@@ -11,7 +11,7 @@ namespace Patches
 	Utils::Hook::Detour FS_InitFilesystem_Hook;
 	void FS_InitFilesystem()
 	{
-		DWORD start = Symbols::Sys_Milliseconds();
+		DWORD start = GetTickCount();
 
 		// Print our loaded modules.
 		Symbols::Com_Printf(0, "\nLoading modules...\n");
@@ -21,7 +21,7 @@ namespace Patches
 		}
 		
 		// Print the time it took to load them all.
-		DWORD end = GetTickCount();	
+		DWORD end = GetTickCount();
 		DWORD duration = end - start;
 		Symbols::Com_Printf(0, "Loaded all modules in %lu ms\n\n", duration);
 
@@ -96,12 +96,12 @@ namespace Patches
 	Utils::Hook::Detour CL_ConsolePrint_AddLine_Hook;
 	char CL_ConsolePrint_AddLine(int localClientNum, int channel, const char* txt, int duration, int pixelWidth, char colour, int flags)
 	{
-#define EXPANDED_BUF_SIZE	4096
-		static char expanded_txt[EXPANDED_BUF_SIZE];
-		FixTab(txt, expanded_txt, sizeof(expanded_txt));
+#define TEXT_BUF_SIZE	4096
+		static char txt2[TEXT_BUF_SIZE];
+		FixTab(txt, txt2, sizeof(txt2));
 
 		auto Invoke = CL_ConsolePrint_AddLine_Hook.Invoke<char(*)(int, int, const char*, int, int, char, int)>();
-		return Invoke(localClientNum, channel, expanded_txt, duration, pixelWidth, colour, flags);
+		return Invoke(localClientNum, channel, txt2, duration, pixelWidth, colour, flags);
 	}
 
 	Utils::Hook::Detour Com_OpenLogFile_Hook;
@@ -133,10 +133,7 @@ namespace Patches
 
 		*(char*)0x82029960 = '\0'; // Remove 'Build 363 xenon' from the console window as it's not needed
 
-		// Redirect the console log file
-		Utils::Hook::SetString(0x8207A8A4, "Redlight/logs/console.log");
-
-		// Redirect some configs
+		// Redirect player config
 		Utils::Hook::SetString(0x82079134, "Redlight/configs/config.cfg");
 
 		// Below are just your general string edits.
@@ -144,7 +141,7 @@ namespace Patches
 		// Utils::Hook::SetString(<address>, <string>); // <comment> (optional)
 
 		Utils::Hook::SetString(0x8218A174, "Creating Direct3D device...\n\n"); // Add a newline for cleaner logging
-		Utils::Hook::SetString(0x8218A5D4, "Couldn't create Direct3D device: %s\n\n"); // Add a newline for cleaner logging
+		Utils::Hook::SetString(0x8218A5D4, "Couldn't create Direct3D device: %s\n\n"); // Add a newline for cleaner logging + removed an 'a'
 		Utils::Hook::SetString(0x82091F00, "GUMP(%s): %s"); // Remove newline for cleaner logging
 
 		// Below are just your general dvar value edits.
@@ -167,6 +164,9 @@ namespace Patches
 	{
 		FS_InitFilesystem_Hook.Remove();
 		DebugReportProfileVars_Hook.Remove();
+		Com_ExecStartupConfigs_Hook.Remove();
+		CL_ConsolePrint_AddLine_Hook.Remove();
+		Com_OpenLogFile_Hook.Remove();
 	}
 
 	void Load()
