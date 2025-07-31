@@ -2,7 +2,7 @@
 
 namespace Loader
 {
-	typedef struct
+	typedef struct Module
 	{
 		const char* name;
 		void (*load)();

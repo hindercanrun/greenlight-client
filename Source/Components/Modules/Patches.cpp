@@ -1,9 +1,10 @@
-#include "../../Std_Include.h"
-#include "../Loader.h"
+#include "../Std_Include.h"
 #include "Patches.h"
+
+#include "../Loader/Loader.h"
 #include "Localized_Strings.h"
 
-#include "../../Utils/Hook.h"
+#include "../Utils/Hook.h"
 
 namespace Patches
 {
@@ -48,12 +49,12 @@ namespace Patches
 	Utils::Hook::Detour Com_ExecStartupConfigs_Hook;
 	void Com_ExecStartupConfigs(int localClientNum, const char* configFile)
 	{
-		static bool alreadyExecuted = false;
-		if (alreadyExecuted)
+		static bool alreadyRanFunction = FALSE;
+		if (alreadyRanFunction)
 		{
 			return;
 		}
-		alreadyExecuted = true;
+		alreadyRanFunction = TRUE;
 
 		auto Invoke = Com_ExecStartupConfigs_Hook.Invoke<void(*)(int, const char*)>();
 		Invoke(localClientNum, configFile);

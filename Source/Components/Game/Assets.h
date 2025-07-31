@@ -2,10 +2,10 @@
 
 namespace Structs
 {
-	struct Material
+	typedef struct Material
 	{
 		// Empty for now
-	};
+	} Material;
 
 	typedef struct Bounds
 	{

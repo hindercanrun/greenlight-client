@@ -19,13 +19,23 @@
 #include <unordered_map>
 #include <direct.h>
 #include <fstream>
+#include <algorithm>
+#include <cstddef>
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
+#include <algorithm>
+#include <functional>
+#include <cstring>
+#include <sstream>
+#include <io.h>
 
 #include <xtl.h>
 #include <stdint.h>
 
-#include "Game\Structures\Assets.h"
-#include "Game\Structures\Structs.h"
-#include "Game\Dvars.h"
+#include "Game\Assets.h"
+#include "Game\Structs.h"
 #include "Game\Symbols.h"
 
 extern "C"

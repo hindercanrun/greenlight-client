@@ -1,12 +1,12 @@
 #include "../Std_Include.h"
 #include "Loader.h"
 
-#include "Modules\Assets.h"
-#include "Modules\DevGui.h"
-#include "Modules\Drawing.h"
-#include "Modules\Localized_Strings.h"
-#include "Modules\LUI.h"
-#include "Modules\Patches.h"
+#include "../Modules/Assets.h"
+#include "../Modules/DevGui.h"
+#include "../Modules/Drawing.h"
+#include "../Modules/Localized_Strings.h"
+#include "../Modules/LUI.h"
+#include "../Modules/Patches.h"
 
 namespace Loader
 {

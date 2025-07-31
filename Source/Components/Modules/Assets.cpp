@@ -1,30 +1,9 @@
-#include "../../Std_Include.h"
+#include "../Std_Include.h"
 #include "Assets.h"
 
-#include "../../Utils/Hook.h"
-#include "../../Utils/String.h"
-#include "../../Utils/FileSystem.h"
-
-#include <direct.h>
-#include <algorithm>
-
-#include <cstddef>
-#include <vector>
-#include <string>
-#include <memory>
-#include <map>
-#include <algorithm>
-#include <functional>
-#include <cstdint>
-#include <cstring>
-#include <direct.h>
-#include <fstream>
-#include <sstream>
-#include <xtl.h>
-#include <xbox.h>
-#include <xgraphics.h>
-#include <io.h>
-#include <xjson.h>
+#include "../Utils/Hook.h"
+#include "../Utils/String.h"
+#include "../Utils/FileSystem.h"
 
 namespace Assets
 {

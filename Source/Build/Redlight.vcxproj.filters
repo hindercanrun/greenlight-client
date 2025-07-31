@@ -7,98 +7,96 @@
     <Filter Include="Components\Modules">
       <UniqueIdentifier>{ff24765a-80e5-4226-8f11-8f550c92231e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Game">
-      <UniqueIdentifier>{835ef767-8306-4667-ab66-998da79ee238}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\Structures">
-      <UniqueIdentifier>{d99516de-85cb-429e-bee1-11a13d6bf9b9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Utils">
+    <Filter Include="Components\Utils">
       <UniqueIdentifier>{3795c03c-8926-4ce6-aa5f-63e4b3567224}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Loader">
+      <UniqueIdentifier>{600c98bc-2b96-4d83-98df-6516d620ac93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Components\Game">
+      <UniqueIdentifier>{835ef767-8306-4667-ab66-998da79ee238}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Components\Loader.cpp">
+    <ClCompile Include="..\Components\Main.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="..\Utils\Hook.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="..\Components\Utils\FileSystem.cpp">
+      <Filter>Components\Utils</Filter>
     </ClCompile>
-    <ClCompile Include="..\Utils\String.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="..\Components\Utils\Hook.cpp">
+      <Filter>Components\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Utils\String.cpp">
+      <Filter>Components\Utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Loader\Loader.cpp">
+      <Filter>Components\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Modules\Assets.cpp">
+      <Filter>Components\Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\Components\Modules\Drawing.cpp">
-      <Filter>Components\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Game\Dvars.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Game\Symbols.cpp">
-      <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Components\Modules\LUI.cpp">
-      <Filter>Components\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Components\Modules\DevGui.cpp">
-      <Filter>Components\Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Components\Modules\Patches.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
     <ClCompile Include="..\Components\Modules\Localized_Strings.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\Utils\FileSystem.cpp">
-      <Filter>Utils</Filter>
+    <ClCompile Include="..\Components\Modules\LUI.cpp">
+      <Filter>Components\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\Components\Modules\Assets.cpp">
+    <ClCompile Include="..\Components\Modules\Patches.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Game\Symbols.cpp">
+      <Filter>Components\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Modules\DevGui.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Components\Loader.h">
+    <ClInclude Include="..\Components\Std_Include.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="..\Std_Include.h" />
-    <ClInclude Include="..\Utils\String.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="..\Components\Utils\FileSystem.h">
+      <Filter>Components\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\Utils\Hook.h">
-      <Filter>Utils</Filter>
+    <ClInclude Include="..\Components\Utils\Hook.h">
+      <Filter>Components\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\Components\Modules\Drawing.h">
-      <Filter>Components\Modules</Filter>
+    <ClInclude Include="..\Components\Utils\String.h">
+      <Filter>Components\Utils</Filter>
     </ClInclude>
-    <ClInclude Include="..\Game\Symbols.h">
-      <Filter>Game</Filter>
+    <ClInclude Include="..\Components\Loader\Loader.h">
+      <Filter>Components\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="..\Game\Dvars.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Game\Structures\Structs.h">
-      <Filter>Game\Structures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Game\Structures\Assets.h">
-      <Filter>Game\Structures</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Components\Modules\LUI.h">
+    <ClInclude Include="..\Components\Modules\Assets.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\DevGui.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Components\Modules\Patches.h">
+    <ClInclude Include="..\Components\Modules\Drawing.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
     <ClInclude Include="..\Components\Modules\Localized_Strings.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Utils\FileSystem.h">
-      <Filter>Utils</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Components\Modules\Assets.h">
+    <ClInclude Include="..\Components\Modules\LUI.h">
       <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\Patches.h">
+      <Filter>Components\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Game\Assets.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Game\Structs.h">
+      <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Game\Symbols.h">
+      <Filter>Components\Game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,86 +1,34 @@
-#include "../../Std_Include.h"
+#include "../Std_Include.h"
 #include "Localized_Strings.h"
 
-#include "../../Utils/Hook.h"
-#include "../../Utils/String.h"
+#include "../Utils/Hook.h"
+#include "../Utils/String.h"
 
 namespace Localized_Strings
 {
-	class SyncLock
-	{
-	public:
-		SyncLock()
-		{
-			InitializeCriticalSection(&this->CritSec);
-			this->Inited = TRUE;
-		}
-
-		~SyncLock()
-		{
-			if (this->Inited)
-			{
-				DeleteCriticalSection(&this->CritSec);
-			}
-		}
-
-		void Lock()
-		{
-			EnterCriticalSection(&this->CritSec);
-		}
-
-		void Unlock()
-		{
-			LeaveCriticalSection(&this->CritSec);
-		}
-
-		CRITICAL_SECTION* Get()
-		{
-			return &this->CritSec;
-		}
-
-	private:
-		CRITICAL_SECTION CritSec;
-		bool Inited;
-	};
-
 	std::unordered_map<std::string, std::string>& getOverrides()
 	{
-		static std::unordered_map<std::string, std::string> Overrides;
-		return Overrides;
-	}
-
-	SyncLock& getLock()
-	{
-		static SyncLock Lock;
-		return Lock;
+		static std::unordered_map<std::string, std::string> overrides;
+		return overrides;
 	}
 
 	Utils::Hook::Detour SEH_StringEd_GetString_Hook;
 	const char* SEH_StringEd_GetString(const char* pszReference)
 	{
-		SyncLock& Lock = getLock();
-		Lock.Lock();
-
 		auto& overrides = getOverrides();
 		const auto entry = overrides.find(pszReference);
 		if (entry != overrides.end())
 		{
-			Lock.Unlock();
-			return Utils::String::Va("%s", entry->second.c_str());
+			return Utils::String::Va("%s", entry->second.data());
 		}
-
-		Lock.Unlock();
 
 		auto Invoke = SEH_StringEd_GetString_Hook.Invoke<const char*(*)(const char*)>();
 		return Invoke(pszReference);
 	}
 
-	void Override(const char* Key, const char* Value)
+	void Override(const char* key, const char* value)
 	{
-		SyncLock& Lock = getLock();
-		Lock.Lock();
-		getOverrides()[Key] = Value;
-		Lock.Unlock();
+		getOverrides()[key] = value;
 	}
 
 	void RegisterHooks()

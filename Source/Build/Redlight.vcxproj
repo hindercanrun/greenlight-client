@@ -114,36 +114,34 @@
     </ImageXex>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\Components\Loader.cpp" />
+    <ClCompile Include="..\Components\Game\Symbols.cpp" />
+    <ClCompile Include="..\Components\Loader\Loader.cpp" />
+    <ClCompile Include="..\Components\Main.cpp" />
+    <ClCompile Include="..\Components\Modules\Assets.cpp" />
     <ClCompile Include="..\Components\Modules\DevGui.cpp" />
     <ClCompile Include="..\Components\Modules\Drawing.cpp" />
-    <ClCompile Include="..\Components\Modules\Assets.cpp" />
     <ClCompile Include="..\Components\Modules\Localized_Strings.cpp" />
     <ClCompile Include="..\Components\Modules\LUI.cpp" />
     <ClCompile Include="..\Components\Modules\Patches.cpp" />
-    <ClCompile Include="..\Game\Dvars.cpp" />
-    <ClCompile Include="..\Game\Symbols.cpp" />
-    <ClCompile Include="..\Main.cpp" />
-    <ClCompile Include="..\Utils\FileSystem.cpp" />
-    <ClCompile Include="..\Utils\Hook.cpp" />
-    <ClCompile Include="..\Utils\String.cpp" />
+    <ClCompile Include="..\Components\Utils\FileSystem.cpp" />
+    <ClCompile Include="..\Components\Utils\Hook.cpp" />
+    <ClCompile Include="..\Components\Utils\String.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\components\Loader.h" />
+    <ClInclude Include="..\Components\Game\Assets.h" />
+    <ClInclude Include="..\Components\Game\Structs.h" />
+    <ClInclude Include="..\Components\Game\Symbols.h" />
+    <ClInclude Include="..\Components\Loader\Loader.h" />
+    <ClInclude Include="..\Components\Modules\Assets.h" />
     <ClInclude Include="..\Components\Modules\DevGui.h" />
     <ClInclude Include="..\Components\Modules\Drawing.h" />
-    <ClInclude Include="..\Components\Modules\Assets.h" />
     <ClInclude Include="..\Components\Modules\Localized_Strings.h" />
     <ClInclude Include="..\Components\Modules\LUI.h" />
     <ClInclude Include="..\Components\Modules\Patches.h" />
-    <ClInclude Include="..\game\Dvars.h" />
-    <ClInclude Include="..\game\structures\Assets.h" />
-    <ClInclude Include="..\game\structures\Structs.h" />
-    <ClInclude Include="..\game\Symbols.h" />
-    <ClInclude Include="..\Std_Include.h" />
-    <ClInclude Include="..\Utils\FileSystem.h" />
-    <ClInclude Include="..\utils\Hook.h" />
-    <ClInclude Include="..\utils\String.h" />
+    <ClInclude Include="..\Components\Std_Include.h" />
+    <ClInclude Include="..\Components\Utils\FileSystem.h" />
+    <ClInclude Include="..\Components\Utils\Hook.h" />
+    <ClInclude Include="..\Components\Utils\String.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

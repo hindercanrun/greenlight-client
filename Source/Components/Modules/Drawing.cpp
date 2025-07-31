@@ -1,8 +1,8 @@
-#include "../../Std_Include.h"
+#include "../Std_Include.h"
 #include "Drawing.h"
 
-#include "../../Utils/Hook.h"
-#include "../../Utils/String.h"
+#include "../Utils/Hook.h"
+#include "../Utils/String.h"
 
 namespace Drawing
 {
@@ -15,19 +15,19 @@ namespace Drawing
 			return;
 		}
 
-		float ColourGood[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
-		float ColourOkay[4] = { 1.0f, 0.7f, 0.3f, 1.0f };
-		float ColourBad[4]  = { 1.0f, 0.3f, 0.3f, 1.0f };
+		float colourGood[4] = { 0.6f, 1.0f, 0.0f, 1.0f };
+		float colourOkay[4] = { 1.0f, 0.7f, 0.3f, 1.0f };
+		float colourBad[4]  = { 1.0f, 0.3f, 0.3f, 1.0f };
 
-		int Count = (int)(1000.0 / Symbols::cg_perfInfo->frame.average);
-		float* TextColour = (Count >= 60)
-			? ColourGood
-			: (Count > 50)
-			? ColourOkay
-			: ColourBad;
+		int count = (int)(1000.0 / Symbols::cg_perfInfo->frame.average);
+		float* textColour = (count >= 60)
+			? colourGood
+			: (count > 50)
+			? colourOkay
+			: colourBad;
 
-		const char* TextString = Utils::String::Va("%i", Count); // Example: '60'
-		Symbols::R_AddCmdDrawText(TextString, MAX_CHARS, *Font, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, TextColour, 3);
+		const char* TextString = Utils::String::Va("%i", count); // Example: '60'
+		Symbols::R_AddCmdDrawText(TextString, MAX_CHARS, *Font, 1245.0f, 30.0f, 1.0f, 1.0f, 0.0f, textColour, 3);
 	}
 
 	void DrawModWatermark()
@@ -46,16 +46,33 @@ namespace Drawing
 		Symbols::R_AddCmdDrawText(TimeString, MAX_CHARS, *Font, 2.0f, 720.0f, 0.8f, 0.8f, 0.0f, TextColour, 3);
 	}
 
+	const Structs::dvar_t* mod_drawFPS = NULL;
+	const Structs::dvar_t* mod_drawWatermark = NULL;
+
+	void RegisterDvars()
+	{
+		mod_drawFPS = Symbols::Dvar_RegisterBool(
+			"mod_drawFPS",
+			TRUE,
+			Structs::DVAR_ARCHIVE,
+			"Draw the FPS counter");
+		mod_drawWatermark = Symbols::Dvar_RegisterBool(
+			"mod_drawWatermark",
+			TRUE,
+			Structs::DVAR_ARCHIVE,
+			"Draw the watermark");
+	}
+
 	Utils::Hook::Detour CL_DrawScreen_Hook;
 	void CL_DrawScreen(int localClientNum)
 	{
-		Dvars::register_dvars();
-		if (Dvars::mod_drawFPS->current.enabled)
+		RegisterDvars();
+		if (mod_drawFPS->current.enabled)
 		{
 			DrawModFPS();
 		}
 
-		if (Dvars::mod_drawWatermark->current.enabled)
+		if (mod_drawWatermark->current.enabled)
 		{
 			DrawModWatermark();
 		}
