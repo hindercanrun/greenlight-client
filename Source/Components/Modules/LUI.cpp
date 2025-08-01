@@ -5,6 +5,19 @@
 
 namespace LUI
 {
+	Utils::Hook::Detour sub_82519818_Hook;
+	const char* sub_82519818(int a1)
+	{
+		static char name[XUSER_NAME_SIZE] = {};
+
+		DWORD result = XUserGetName(0, name, XUSER_NAME_SIZE);
+		if (result == ERROR_SUCCESS)
+		{
+			return name;
+		}
+		return "Unknown Solider";
+	}
+
 	Utils::Hook::Detour LUI_CoD_Init_Hook;
 	void LUI_CoD_Init(bool frontend)
 	{
@@ -31,6 +44,8 @@ namespace LUI
 
 	void RegisterHooks()
 	{
+		sub_82519818_Hook.Create(0x82519818, sub_82519818);
+
 		// Add some custom prints.
 		LUI_CoD_Init_Hook.Create(0x828BDA08, LUI_CoD_Init);
 		LUI_Shutdown_Hook.Create(0x828B7200, LUI_Shutdown);
