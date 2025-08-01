@@ -5,8 +5,8 @@
 #include "../Modules/DevGui.h"
 #include "../Modules/Drawing.h"
 #include "../Modules/Localized_Strings.h"
-#include "../Modules/LUI.h"
 #include "../Modules/Patches.h"
+#include "../Modules/UI.h"
 
 namespace Loader
 {
@@ -60,9 +60,9 @@ namespace Loader
 		RegisterModule("Assets",				Assets::Load,				Assets::Unload);
 		RegisterModule("DevGui",				DevGui::Load,				DevGui::Unload);
 		RegisterModule("Drawing",				Drawing::Load,				Drawing::Unload);
-		RegisterModule("LUI",					LUI::Load,					LUI::Unload);
 		RegisterModule("Localized Strings",		Localized_Strings::Load,	Localized_Strings::Unload);
 		RegisterModule("Patches",				Patches::Load,				Patches::Unload);
+		RegisterModule("UI",					UI::Load,					UI::Unload);
 
 		LoadAllModules();
 	}

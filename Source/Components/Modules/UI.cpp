@@ -1,12 +1,12 @@
 #include "../Std_Include.h"
-#include "LUI.h"
+#include "UI.h"
 
 #include "../Utils/Hook.h"
 
-namespace LUI
+namespace UI
 {
-	Utils::Hook::Detour sub_82519818_Hook;
-	const char* sub_82519818(int a1)
+	Utils::Hook::Detour UI_FeederItemText_GetUserName_Hook;
+	const char* UI_FeederItemText_GetUserName(int userIndex)
 	{
 		static char name[XUSER_NAME_SIZE] = {};
 
@@ -44,7 +44,8 @@ namespace LUI
 
 	void RegisterHooks()
 	{
-		sub_82519818_Hook.Create(0x82519818, sub_82519818);
+		// 'Fix' the feeder to properly display the players name instead of 'Player 1'
+		UI_FeederItemText_GetUserName_Hook.Create(0x82519818, UI_FeederItemText_GetUserName);
 
 		// Add some custom prints.
 		LUI_CoD_Init_Hook.Create(0x828BDA08, LUI_CoD_Init);
@@ -56,6 +57,7 @@ namespace LUI
 
 	void UnregisterHooks()
 	{
+		UI_FeederItemText_GetUserName_Hook.Remove();
 		LUI_CoD_Init_Hook.Remove();
 		LUI_Shutdown_Hook.Remove();
 		koreDefaultLogger_Hook.Remove();

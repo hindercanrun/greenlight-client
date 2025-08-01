@@ -42,9 +42,6 @@
     <ClCompile Include="..\Components\Modules\Localized_Strings.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="..\Components\Modules\LUI.cpp">
-      <Filter>Components\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="..\Components\Modules\Patches.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
@@ -52,6 +49,9 @@
       <Filter>Components\Game</Filter>
     </ClCompile>
     <ClCompile Include="..\Components\Modules\DevGui.cpp">
+      <Filter>Components\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Components\Modules\UI.cpp">
       <Filter>Components\Modules</Filter>
     </ClCompile>
   </ItemGroup>
@@ -83,9 +83,6 @@
     <ClInclude Include="..\Components\Modules\Localized_Strings.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="..\Components\Modules\LUI.h">
-      <Filter>Components\Modules</Filter>
-    </ClInclude>
     <ClInclude Include="..\Components\Modules\Patches.h">
       <Filter>Components\Modules</Filter>
     </ClInclude>
@@ -97,6 +94,9 @@
     </ClInclude>
     <ClInclude Include="..\Components\Game\Symbols.h">
       <Filter>Components\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Components\Modules\UI.h">
+      <Filter>Components\Modules</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

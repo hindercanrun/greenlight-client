@@ -121,7 +121,7 @@
     <ClCompile Include="..\Components\Modules\DevGui.cpp" />
     <ClCompile Include="..\Components\Modules\Drawing.cpp" />
     <ClCompile Include="..\Components\Modules\Localized_Strings.cpp" />
-    <ClCompile Include="..\Components\Modules\LUI.cpp" />
+    <ClCompile Include="..\Components\Modules\UI.cpp" />
     <ClCompile Include="..\Components\Modules\Patches.cpp" />
     <ClCompile Include="..\Components\Utils\FileSystem.cpp" />
     <ClCompile Include="..\Components\Utils\Hook.cpp" />
@@ -136,7 +136,7 @@
     <ClInclude Include="..\Components\Modules\DevGui.h" />
     <ClInclude Include="..\Components\Modules\Drawing.h" />
     <ClInclude Include="..\Components\Modules\Localized_Strings.h" />
-    <ClInclude Include="..\Components\Modules\LUI.h" />
+    <ClInclude Include="..\Components\Modules\UI.h" />
     <ClInclude Include="..\Components\Modules\Patches.h" />
     <ClInclude Include="..\Components\Std_Include.h" />
     <ClInclude Include="..\Components\Utils\FileSystem.h" />

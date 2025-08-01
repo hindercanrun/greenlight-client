@@ -1,6 +1,6 @@
 #pragma once
 
-namespace LUI
+namespace UI
 {
 	void Load();
 	void Unload();
