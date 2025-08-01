@@ -27,7 +27,7 @@ namespace Patches
 		Symbols::Com_Printf(0, "Loaded all modules in %lu ms\n\n", duration);
 
 		auto Invoke = FS_InitFilesystem_Hook.Invoke<void(*)()>();
-		//Invoke();
+		Invoke();
 	}
 
 	Utils::Hook::Detour DebugReportProfileVars_Hook;
