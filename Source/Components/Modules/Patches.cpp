@@ -27,7 +27,7 @@ namespace Patches
 		Symbols::Com_Printf(0, "Loaded all modules in %lu ms\n\n", duration);
 
 		auto Invoke = FS_InitFilesystem_Hook.Invoke<void(*)()>();
-		Invoke();
+		//Invoke();
 	}
 
 	Utils::Hook::Detour DebugReportProfileVars_Hook;
@@ -123,6 +123,54 @@ namespace Patches
 		return;
 	}
 
+	Utils::Hook::Detour Assert_MyHandler_Hook;
+	void Assert_MyHandler(const char* filename, int line, int type, const char* fmt, ...)
+	{
+		// TODO: Implement symbols printing. For that extra cool debug info
+
+		static const char* lastFilename = nullptr;
+		static int lastLine = -1;
+		static int repeatCount = 0;
+
+		// Check if this is the same assert location as last time
+		if (lastFilename && strcmp(lastFilename, filename) == 0 && lastLine == line)
+		{
+			repeatCount++;
+		}
+		else
+		{
+			lastFilename = filename;
+			lastLine = line;
+			repeatCount = 1;
+		}
+
+		char message[1024];
+
+		va_list va;
+		va_start(va, fmt);
+		_vsnprintf_s(message, sizeof(message), fmt, va);
+		message[sizeof(message) - 1] = '\0';
+
+		Symbols::Com_Printf(0, "\n");
+		Symbols::Com_Printf(0, "****************************************\n");
+		Symbols::Com_Printf(0, "*  Assertion Info:\n");
+		Symbols::Com_Printf(0, "*  Message:       %s\n", message);
+		Symbols::Com_Printf(0, "*  File:          %s\n", filename);
+		Symbols::Com_Printf(0, "*  Line:          %d\n", line);
+		Symbols::Com_Printf(0, "****************************************\n");
+
+		if (repeatCount >= 2)
+		{
+			Symbols::Com_Printf(0, "*  Warning:       Same assert triggered twice.\n");
+			Symbols::Com_Printf(0, "****************************************\n");
+		}
+		else
+		{
+			Symbols::Com_Printf(0, "*  Note:          First time this assert occurred.\n");
+			Symbols::Com_Printf(0, "****************************************\n");
+		}
+	}
+
 	void RegisterHooks()
 	{
 		FS_InitFilesystem_Hook.Create(0x82588FE0, FS_InitFilesystem); // Print loaded modules
@@ -140,6 +188,8 @@ namespace Patches
 
 		Live_Base_Pump_Hook.Create(0x82769078, Live_Base_Pump);
 		Live_Base_PumpForController_Hook.Create(0x82768D00, Live_Base_PumpForController);
+
+		Assert_MyHandler_Hook.Create(0x825661F0, Assert_MyHandler); // My custom assertion handler.
 
 		*(char*)0x8207C3B8 = '\0'; // Remove [timestamp][channel] string from log file.
 
