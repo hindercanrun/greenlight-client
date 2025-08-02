@@ -289,6 +289,31 @@ namespace Assets
 			}
 		}
 
+		const char* LocalizedStrings_GetFileNotes(const std::string& prefix)
+		{
+			if (prefix == "debug")
+			{
+				return "Strings used for debugging go in this file.";
+			}
+			if (prefix == "game")
+			{
+				return "Game messages made by the server game dll go in this file.";
+			}
+			else if (prefix == "menu")
+			{
+				return "Strings displayed in the menus go in this file.";
+			}
+			else if (prefix == "script")
+			{
+				return "All game messages made by script should go in this file.";
+			}
+			else if (prefix == "weapon")
+			{
+				return "Strings used in the weapon settings go in this file.";
+			}
+			return "No known Notes.";
+		}
+
 		void Cmd_DumpLocalizedStrings_f()
 		{
 			Structs::XAssetHeader files[20000];
@@ -296,25 +321,10 @@ namespace Assets
 
 			std::map<std::string, std::string> groupedStr;
 
-			const char* header =
-				"// Note to translators:\n"
-				"// If a sentence is the same in your language then please change it to \"#same\"\n"
-				"//\n"
-				"// eg:\n"
-				"// LANG_ENGLISH  \"HALT\"\n"
-				"// LANG_GERMAN   \"#same\"\n"
-				"//\n"
-				"// (This is so we can tell which strings have been signed-off as ok to be the same words for QA\n"
-				"//  and because we do not store duplicate strings, which will then get exported again next time\n"
-				"//  as being untranslated.)\n"
-				"//\n"
-				"VERSION             \"1\"\n"
-				"CONFIG              \"C:\\\\t6\\\\main\\\\game\\\\bin\\\\StringEd.cfg\"\n"
-				"FILENOTES           \"\"\n\n";
-
 			for (int i = 0; i < count; ++i)
 			{
 				Structs::LocalizeEntry* entry = files[i].localize;
+
 				std::string name(entry->name);
 				std::string value(entry->value);
 
@@ -340,9 +350,27 @@ namespace Assets
 				}
 
 				std::string& buffer = groupedStr[prefix];
+
 				if (buffer.empty())
 				{
-					buffer += header;
+					const char* fileNotes = LocalizedStrings_GetFileNotes(prefix);
+
+					buffer +=
+						"// Note to translators:\n"
+						"// If a sentence is the same in your language then please change it to \"#same\"\n"
+						"//\n"
+						"// eg:\n"
+						"// LANG_ENGLISH  \"HALT\"\n"
+						"// LANG_GERMAN   \"#same\"\n"
+						"//\n"
+						"// (This is so we can tell which strings have been signed-off as ok to be the same words for QA\n"
+						"//  and because we do not store duplicate strings, which will then get exported again next time\n"
+						"//  as being untranslated.)\n"
+						"//\n"
+						"VERSION             \"1\"\n"
+						"CONFIG              \"C:\\t6\\main\\game\\bin\\StringEd.cfg\"\n";
+					buffer +=
+						"FILENOTES           \"" + std::string(fileNotes) + "\"\n\n";
 				}
 
 				buffer += "REFERENCE           " + key + "\n";
@@ -353,7 +381,7 @@ namespace Assets
 			{
 				it->second += "\nENDMARKER\n\n";
 
-				std::string outPath = "game:\\dump\\english\\localizedstrings\\" + it->first + ".str";
+				std::string outPath = "game:\\Redlight\\dump\\english\\localizedstrings\\" + it->first + ".str";
 				Utils::FileSystem::WriteFileToDisk(outPath.c_str(), it->second.c_str(), it->second.size());
 			}
 		}
@@ -504,7 +532,7 @@ namespace Assets
 			alreadyRanFunction = TRUE;
 
 			//Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
-			//Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
+			Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
 			Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
 			Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpScriptParseTree", Cmd_DumpScriptParseTree_f, &Cmd_DumpScriptParseTree_f_VAR);
