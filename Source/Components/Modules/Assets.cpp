@@ -242,8 +242,14 @@ namespace Assets
 				// Replace forward slashes with backslashes
 				std::replace(assetName.begin(), assetName.end(), '/', '\\');
 
-				std::string path = "game:\\Redlight\\dump\\" + assetName;
-				Utils::FileSystem::WriteFileToDisk(path.c_str(), mapEnts->entityString, mapEnts->numEntityChars);
+				int len = mapEnts->numEntityChars;
+				if (len > 0 && mapEnts->entityString[len - 1] == '\0')
+				{
+					len--;
+				}
+
+				std::string outputPath = "game:\\Redlight\\dump\\" + assetName;
+				Utils::FileSystem::WriteFileToDisk(outputPath.c_str(), mapEnts->entityString, len);
 			}
 		}
 
