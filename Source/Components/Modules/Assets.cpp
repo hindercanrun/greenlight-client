@@ -234,22 +234,22 @@ namespace Assets
 
 			for (int i = 0; i < count; i++)
 			{
-				Structs::MapEnts* mapEnts = files[i].mapEnts;
+				Structs::MapEnts* varMapEnts = files[i].mapEnts;
 
-				std::string assetName = mapEnts->name;
+				std::string assetName = varMapEnts->name;
 				assetName += ".mapents";
 
 				// Replace forward slashes with backslashes
 				std::replace(assetName.begin(), assetName.end(), '/', '\\');
 
-				int len = mapEnts->numEntityChars;
-				if (len > 0 && mapEnts->entityString[len - 1] == '\0')
+				int len = varMapEnts->numEntityChars;
+				if (len > 0 && varMapEnts->entityString[len - 1] == '\0')
 				{
 					len--;
 				}
 
 				std::string outputPath = "game:\\Redlight\\dump\\" + assetName;
-				Utils::FileSystem::WriteFileToDisk(outputPath.c_str(), mapEnts->entityString, len);
+				Utils::FileSystem::WriteFileToDisk(outputPath.c_str(), varMapEnts->entityString, len);
 			}
 		}
 
