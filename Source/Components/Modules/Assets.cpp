@@ -510,7 +510,7 @@ namespace Assets
 
 	void Load()
 	{
-		//Loading::RegisterHooks();
+		Loading::RegisterHooks();
 		Dumping::RegisterCommands();
 	}
 
