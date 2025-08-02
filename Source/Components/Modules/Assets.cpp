@@ -365,11 +365,14 @@ namespace Assets
 
 			for (int i = 0; i < count; i++)
 			{
-				Structs::RawFile* rawFile = files[i].rawfile;
-				std::string asset_name = rawFile->name;
-				std::replace(asset_name.begin(), asset_name.end(), '/', '\\'); // Replace forward slashes with backslashes
+				Structs::RawFile* varRawFile = files[i].rawfile;
+				std::string assetName = varRawFile->name;
 
-				Utils::FileSystem::WriteFileToDisk(("game:\\dump\\" + asset_name).c_str(), rawFile->buffer, rawFile->len);
+				// Replace forward slashes with backslashes
+				std::replace(assetName.begin(), assetName.end(), '/', '\\');
+
+				std::string outputPath = "game:\\Redlight\\dump\\" + assetName;
+				Utils::FileSystem::WriteFileToDisk(outputPath.c_str(), varRawFile->buffer, varRawFile->len);
 			}
 		}
 
@@ -502,7 +505,7 @@ namespace Assets
 
 			//Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
-			//Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
+			Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
 			Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpScriptParseTree", Cmd_DumpScriptParseTree_f, &Cmd_DumpScriptParseTree_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpKeyValuePair", Cmd_DumpKeyValuePair_f, &Cmd_DumpKeyValuePair_f_VAR);
