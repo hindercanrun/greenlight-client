@@ -235,57 +235,15 @@ namespace Assets
 			for (int i = 0; i < count; i++)
 			{
 				Structs::MapEnts* mapEnts = files[i].mapEnts;
+
 				std::string assetName = mapEnts->name;
-				std::replace(assetName.begin(), assetName.end(), '/', '\\'); // Replace forward slashes with backslashes
+				assetName += ".mapents";
 
-				const std::string extension = ".d3dbsp";
-				if (assetName.size() >= extension.size() &&
-					assetName.compare(assetName.size() - extension.size(),
-					extension.size(), extension) == 0)
-				{
-					assetName.erase(assetName.size() - extension.size(), extension.size());
-				}
+				// Replace forward slashes with backslashes
+				std::replace(assetName.begin(), assetName.end(), '/', '\\');
 
-				// Dump map ents
-				std::string path = "game:\\dump\\" + assetName + ".ents";
+				std::string path = "game:\\Redlight\\dump\\" + assetName;
 				Utils::FileSystem::WriteFileToDisk(path.c_str(), mapEnts->entityString, mapEnts->numEntityChars);
-
-				// Dump triggers
-				const Structs::MapTriggers& trigger = mapEnts->trigger;
-				std::string trigger_path = "game:\\dump\\" + assetName + ".triggers";
-				std::stringstream ss;
-
-				ss << "Trigger Count (" << trigger.count << "):\n";
-				for (unsigned int j = 0; j < trigger.count; ++j)
-				{
-					const auto& model = trigger.models[j];
-					ss << "  [" << j << "] contents=" << model.contents
-					   << ", hullCount=" << model.hullCount
-					   << ", firstHull=" << model.firstHull << "\n";
-				}
-
-				ss << "\nHull Count (" << trigger.hullCount << "):\n";
-				for (unsigned int j = 0; j < trigger.hullCount; ++j)
-				{
-					const auto& hull = trigger.hulls[j];
-					ss << "  [" << j << "] contents=" << hull.contents
-					   << ", slabCount=" << hull.slabCount
-					   << ", firstSlab=" << hull.firstSlab << "\n";
-					ss << "    Bounds mid=(" << hull.bounds.midPoint[0] << ", " << hull.bounds.midPoint[1] << ", " << hull.bounds.midPoint[2]
-					   << ") half=(" << hull.bounds.halfSize[0] << ", " << hull.bounds.halfSize[1] << ", " << hull.bounds.halfSize[2] << ")\n";
-				}
-
-				ss << "\nSlab Count (" << trigger.slabCount << "):\n";
-				for (unsigned int j = 0; j < trigger.slabCount; ++j)
-				{
-					const auto& slab = trigger.slabs[j];
-					ss << "  [" << j << "] dir=(" << slab.dir[0] << ", " << slab.dir[1] << ", " << slab.dir[2]
-					   << "), midPoint=" << slab.midPoint
-					   << ", halfSize=" << slab.halfSize << "\n";
-				}
-
-				std::string trigger_text = ss.str();
-				Utils::FileSystem::WriteFileToDisk(trigger_path.c_str(), trigger_text.c_str(), static_cast<int>(trigger_text.size()));
 			}
 		}
 
@@ -531,7 +489,7 @@ namespace Assets
 			}
 			alreadyRanFunction = TRUE;
 
-			//Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
+			Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
 			Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
 			Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
 			Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);
@@ -542,7 +500,7 @@ namespace Assets
 
 	void Load()
 	{
-		Loading::RegisterHooks();
+		//Loading::RegisterHooks();
 		Dumping::RegisterCommands();
 	}
 
