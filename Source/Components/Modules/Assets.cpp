@@ -376,55 +376,33 @@ namespace Assets
 		void Cmd_DumpStringTables_f()
 		{
 			Structs::XAssetHeader files[1024];
-			int count = Symbols::DB_GetAllXAssetOfType_FastFile(Structs::ASSET_TYPE_STRINGTABLE, files, 1024);
+			int count = Symbols::DB_GetAllXAssetOfType_FastFile(Structs::ASSET_TYPE_STRINGTABLE, files, 128);
+
 			for (int i = 0; i < count; ++i)
 			{
-				Structs::StringTable* table = files[i].stringTable;
-				std::string name = table->name ? table->name : "unnamed";
-				std::replace(name.begin(), name.end(), '/', '\\');
-				std::string outPath = "game:\\dump\\" + name;
+				Structs::StringTable* varStringTable = files[i].stringTable;
 
-				std::string csv;
+				std::string assetName = varStringTable->name;
 
-				for (int row = 0; row < table->rowCount; ++row)
+				// Replace forward slashes with backslashes
+				std::replace(assetName.begin(), assetName.end(), '/', '\\');
+
+				std::string csvTable;
+				for (int j = 0; j < varStringTable->rowCount; j++)
 				{
-					for (int col = 0; col < table->columnCount; ++col)
+					for (int k = 0; k < varStringTable->columnCount; k++)
 					{
-						int index = row * table->columnCount + col;
-						int cellIdx = table->cellIndex[index];
-
-						const char* value = (cellIdx >= 0 && cellIdx < table->rowCount * table->columnCount)
-							? table->values[cellIdx].string
-							: "";
-
-						std::string cell = value ? value : "";
-
-						// Wrap in quotes and double any internal quotes
-						bool needsQuotes = cell.find(',') != std::string::npos || cell.find('"') != std::string::npos;
-						if (needsQuotes)
+						csvTable += varStringTable->values[j * varStringTable->columnCount + k].string;
+						if (k < varStringTable->columnCount - 1)
 						{
-							size_t pos = 0;
-							while ((pos = cell.find('"', pos)) != std::string::npos)
-							{
-								cell.insert(pos, "\"");
-								pos += 2;
-							}
-							csv += '"';
-							csv += cell;
-							csv += '"';
+							csvTable += ",";
 						}
-						else
-						{
-							csv += cell;
-						}
-
-						if (col < table->columnCount - 1)
-							csv += ',';
 					}
-					csv += '\n';
+					csvTable += "\n";
 				}
 
-				Utils::FileSystem::WriteFileToDisk(outPath.c_str(), csv.c_str(), csv.size());
+				std::string outPath = "game:\\Redlight\\dump\\" + assetName;
+				Utils::FileSystem::WriteFileToDisk(outPath.c_str(), csvTable.c_str(), csvTable.size());
 			}
 		}
 
@@ -513,10 +491,19 @@ namespace Assets
 
 		void RegisterCommands()
 		{
+			// Okay so weirdly the game tries to reregister these every frame. So only run this function **once**.
+			static bool alreadyRanFunction = FALSE;
+			if (alreadyRanFunction)
+			{
+				alreadyRanFunction = TRUE;
+				return;
+			}
+			alreadyRanFunction = TRUE;
+
 			//Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
-			//Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);
+			Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpScriptParseTree", Cmd_DumpScriptParseTree_f, &Cmd_DumpScriptParseTree_f_VAR);
 			//Symbols::Cmd_AddCommand("DumpKeyValuePair", Cmd_DumpKeyValuePair_f, &Cmd_DumpKeyValuePair_f_VAR);
 		}

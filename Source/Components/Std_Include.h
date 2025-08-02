@@ -2,6 +2,8 @@
 
 #define TITLE_ID 0x415608C3 // New Moon
 
+#define BASE_MOD_FOLDER "Redlight"
+
 // This makes 'std::numeric_limits<int>::max()' work.
 #define NOMINMAX
 
