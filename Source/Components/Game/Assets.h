@@ -183,6 +183,7 @@ namespace Structs
 
 	typedef union XAssetHeader
 	{
+		GfxImage* image;
 		MapEnts* mapEnts;
 		GfxLightDef* lightDef;
 		Font_s* font;

@@ -227,6 +227,469 @@ namespace Assets
 
 	namespace Dumping
 	{
+		struct CardMemory
+		{
+		  int platform[1];
+		};
+
+		struct GfxImage
+		{
+			D3DBaseTexture basemap;
+			char unknown2;
+			char unknown3;
+			char unknown4;
+			char unknown5;
+		  __declspec(align(4)) CardMemory cardMemory; //defines the size
+		  unsigned __int16 width;
+		  unsigned __int16 height;
+		  unsigned __int16 depth;
+		  char levelCount;
+		  char streaming;
+		  unsigned int baseSize;
+		  char *pixels;
+			char unknownData2[0x80];
+		  const char *name;
+		  unsigned int hash;
+
+		  int dumpGfxImageAsset();
+		};
+
+#define DDSCAPS2_CUBEMAP			0x200
+#define DDSCAPS2_CUBEMAP_POSITIVEX	0x400
+#define DDSCAPS2_CUBEMAP_NEGATIVEX	0x800
+#define DDSCAPS2_CUBEMAP_POSITIVEY	0x1000
+#define DDSCAPS2_CUBEMAP_NEGATIVEY	0x2000
+#define DDSCAPS2_CUBEMAP_POSITIVEZ	0x4000
+#define DDSCAPS2_CUBEMAP_NEGATIVEZ	0x8000
+#define DDSCAPS2_VOLUME				0x200000
+
+#define DDSD_CAPS        0x00000001
+#define DDSD_HEIGHT      0x00000002
+#define DDSD_WIDTH       0x00000004
+#define DDSD_PITCH       0x00000008
+#define DDSD_PIXELFORMAT 0x00001000
+#define DDSD_MIPMAPCOUNT 0x00020000
+#define DDSD_LINEARSIZE  0x00080000
+
+#define DDSCAPS_TEXTURE  0x00001000
+#define DDSCAPS_MIPMAP   0x00400000
+#define DDSCAPS_COMPLEX  0x00000008
+
+#define DDS_MAGIC 0x44445320 // 'DDS '
+
+		#pragma pack(push, 1)
+		typedef struct
+		{
+			uint32_t dwSize;
+			uint32_t dwFlags;
+			uint32_t dwFourCC;
+			uint32_t dwRGBBitCount;
+			uint32_t dwRBitMask;
+			uint32_t dwGBitMask;
+			uint32_t dwBBitMask;
+			uint32_t dwABitMask;
+		} DDS_PIXELFORMAT;
+
+		typedef struct
+		{
+			uint32_t dwSize;
+			uint32_t dwFlags;
+			uint32_t dwHeight;
+			uint32_t dwWidth;
+			uint32_t dwPitchOrLinearSize;
+			uint32_t dwDepth;
+			uint32_t dwMipMapCount;
+			uint32_t dwReserved1[11];
+			DDS_PIXELFORMAT ddspf;
+			uint32_t dwCaps;
+			uint32_t dwCaps2;
+			uint32_t dwCaps3;
+			uint32_t dwCaps4;
+			uint32_t dwReserved2;
+		} DDS_HEADER;
+		#pragma pack(pop)
+
+		int GfxImage::dumpGfxImageAsset()
+		{
+			// Only print if in Debug env to prevent spam
+#ifdef DEBUG
+			Symbols::Com_Printf(0, "Dumping image '%s'\n", name);
+#endif
+
+			// TODO: Implement dumping from streamed textures, in .ipak files. 
+			if (streaming)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's being streamed from an IPak\n", name);
+				return ERROR_CALL_NOT_IMPLEMENTED;
+			}
+
+			if (basemap.Format.Type != GPUCONSTANTTYPE_TEXTURE)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's type is '%i'\n", name, basemap.Format.Type);
+				return ERROR_CALL_NOT_IMPLEMENTED;
+			}
+
+			// TODO: Possibly support other formats, if needed..
+			if (basemap.Format.DataFormat != GPUTEXTUREFORMAT_DXT1
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_DXT2_3
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_DXT4_5
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_DXN
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_8_8_8_8
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_8_8
+				&& basemap.Format.DataFormat != GPUTEXTUREFORMAT_8)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's format value is '%i'\n", name, basemap.Format.DataFormat);
+				return ERROR_CALL_NOT_IMPLEMENTED;
+			}
+
+			// TODO: Support 1D and 3D,  if needed.. Note: 3D should be supported since some textures are in 3D
+			if(basemap.Format.Dimension != GPUDIMENSION_2D && basemap.Format.Dimension != GPUDIMENSION_CUBEMAP)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's dimension value is '%i'\n", name, basemap.Format.Dimension);
+				return ERROR_CALL_NOT_IMPLEMENTED;
+			}
+
+			int padAmount = 128;
+
+			int vWidth = width;
+			if (vWidth % padAmount != 0)
+			{
+				vWidth += (padAmount - vWidth % padAmount);
+			}
+
+			int vHeight = height;
+			if (vHeight % padAmount != 0)
+			{
+				vHeight += (padAmount - vHeight % padAmount);
+			}
+
+			// Allocate memory
+			size_t newSize = cardMemory.platform[0];
+			char* memAlloc = static_cast<char*>(malloc(newSize));
+			if (!memAlloc)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because there was not enough memory!\n", name);
+				return ERROR_NOT_ENOUGH_MEMORY;
+			}
+
+			// Zero the memory
+			ZeroMemory(memAlloc, cardMemory.platform[0]);
+
+			static int counter = 0;
+			const char* imageName = name;
+			if (!imageName)
+			{
+				// Format it as '(null)_<number>'
+				static char nameBuf[64];
+				_snprintf(nameBuf, sizeof(nameBuf), "(null)_%d", ++counter);
+				imageName = nameBuf;
+			}
+
+			// Check if the texture is already dumped
+			const char* outputPath = Utils::String::Va("game:\\Redlight\\dump\\images\\%s.dds", imageName);
+			if (Utils::FileSystem::FileExists(outputPath))
+			{
+				Symbols::Com_PrintWarning(0, "Silly you trying to dump '%s' twice...\n", name);
+				return ERROR_DUP_NAME;
+			}
+
+			// Create just in case it doesn't exist
+			CreateDirectory("game:\\Redlight\\dump\\images", 0);
+
+			// Create the .DDS now
+			FILE* file = fopen(outputPath, "wb");
+			if (!file)
+			{
+				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's name contains invalid characters!\n", name);
+				free(memAlloc);
+				return ERROR_BAD_NETPATH;
+			}
+
+			int dwMagic = DDS_MAGIC;
+			fwrite(&dwMagic, 4, 1, file);
+
+			int dwSize = _byteswap_ulong(124);
+			fwrite(&dwSize, 4, 1, file);
+
+			int dwFlags = (DDSD_CAPS | DDSD_HEIGHT | DDSD_WIDTH | DDSD_PIXELFORMAT);
+			int dwPitchOrLinearSize;
+
+			XGTEXTURE_DESC sourceDesc;
+			XGGetTextureDesc(&basemap, 0, &sourceDesc);
+
+			if (basemap.Format.DataFormat == GPUTEXTUREFORMAT_8_8_8_8
+				|| basemap.Format.DataFormat == GPUTEXTUREFORMAT_8_8
+				|| basemap.Format.DataFormat == GPUTEXTUREFORMAT_8)
+			{
+				dwFlags |= DDSD_PITCH;
+				dwPitchOrLinearSize = _byteswap_ulong(width * sourceDesc.BitsPerPixel / 8);
+			}
+			else
+			{
+				dwFlags |= DDSD_LINEARSIZE;
+				dwPitchOrLinearSize = _byteswap_ulong(baseSize);
+			}
+
+			int dwMipMapCount = 0;
+			int levels = levelCount;
+			if (levels > 1)
+			{
+				dwMipMapCount = levels;
+				dwFlags |= DDSD_MIPMAPCOUNT;
+			}
+
+			dwFlags = _byteswap_ulong(dwFlags);
+			fwrite(&dwFlags, 4, 1, file);
+
+			int dwHeight = _byteswap_ulong(height);
+			int dwWidth = _byteswap_ulong(width);
+			fwrite(&dwHeight, 4, 1, file);
+			fwrite(&dwWidth, 4, 1, file);
+
+			fwrite(&dwPitchOrLinearSize, 4, 1, file);
+
+			int nullOut = 0;
+			fwrite(&nullOut, 4, 1, file);
+
+			dwMipMapCount = _byteswap_ulong(dwMipMapCount);
+			fwrite(&dwMipMapCount, 4, 1, file);
+
+			for (int i = 0; i < 11; i++)
+			{
+				fwrite(&nullOut, 4, 1, file);
+			}
+
+			int dwSize2 = _byteswap_ulong(32);
+			fwrite(&dwSize2, 4, 1, file);
+
+			int dwFlags2 = 0;
+			int dwFourCC = 0;
+
+			switch (basemap.Format.DataFormat)
+			{
+			case GPUTEXTUREFORMAT_DXT1:
+				dwFourCC	= 0x31545844; // 'DXT1'
+				dwFlags2	|= 4;
+				break;
+			case GPUTEXTUREFORMAT_DXT2_3:
+				dwFourCC	= 0x33545844; // 'DXT3'
+				dwFlags2	|= 4;
+				break;
+			case GPUTEXTUREFORMAT_DXT4_5:
+				dwFourCC	= 0x35545844; // 'DXT5'
+				dwFlags2	|= 4;
+				break;
+			case GPUTEXTUREFORMAT_DXN:
+				dwFourCC	= 0x32495441; // 'ATI2'
+				dwFlags2	|= 4;
+				break;
+			case GPUTEXTUREFORMAT_8:
+				dwFlags2	|= 0x2;
+				break;
+			case GPUTEXTUREFORMAT_8_8:
+				dwFlags2	|= 0x20001;
+				break;
+			case GPUTEXTUREFORMAT_8_8_8_8:
+				dwFlags2	|= 0x41;
+				break;
+			default:
+				Symbols::Com_PrintWarning(0, "basemap.Format.DataFormat has encountered an supported format '0x%X' for '%s'\n", basemap.Format.DataFormat, name);
+				break;
+			}
+
+			int dwCaps1 = 0;
+			int dwCaps2 = 0;
+
+			dwCaps1 |= 0x00001000;
+
+			if (levels > 1)
+			{
+				dwCaps1 |= 0x00400008;
+			}
+			
+			// Handle Cubemaps
+			if (basemap.Format.Dimension == GPUDIMENSION_CUBEMAP)
+			{
+				dwCaps1 |= 2;
+				dwCaps2 |= (DDSCAPS2_CUBEMAP
+					| DDSCAPS2_CUBEMAP_POSITIVEX
+					| DDSCAPS2_CUBEMAP_NEGATIVEX
+					| DDSCAPS2_CUBEMAP_POSITIVEY
+					| DDSCAPS2_CUBEMAP_NEGATIVEY
+					| DDSCAPS2_CUBEMAP_POSITIVEZ
+					| DDSCAPS2_CUBEMAP_NEGATIVEZ);
+			}
+
+			dwFlags2 = _byteswap_ulong(dwFlags2);
+			fwrite(&dwFlags2, 4, 1, file);
+
+			dwFourCC = _byteswap_ulong(dwFourCC);
+			fwrite(&dwFourCC, 4, 1, file);
+
+			int dwRGBBitCount;
+			int dwRBitMask;
+			int dwGBitMask;
+			int dwBBitMask;
+			int dwRGBAlphaBitMask;
+
+			if (basemap.Format.DataFormat == GPUTEXTUREFORMAT_8_8_8_8)
+			{
+				dwRGBBitCount		= _byteswap_ulong(sourceDesc.BitsPerPixel);
+				dwRBitMask			= _byteswap_ulong(0x00ff0000);
+				dwGBitMask			= _byteswap_ulong(0x0000ff00);
+				dwBBitMask			= _byteswap_ulong(0x000000ff);
+				dwRGBAlphaBitMask	= _byteswap_ulong(0xff000000);
+			}
+			else if (basemap.Format.DataFormat == GPUTEXTUREFORMAT_8_8)
+			{
+				dwRGBBitCount		= _byteswap_ulong(sourceDesc.BitsPerPixel);
+				dwRBitMask			= _byteswap_ulong(0x00ff);
+				dwGBitMask			= 0x00000000;
+				dwBBitMask			= 0x00000000;
+				dwRGBAlphaBitMask	= _byteswap_ulong(0xff00);
+			}
+			else if (basemap.Format.DataFormat == GPUTEXTUREFORMAT_8)
+			{
+				dwRGBBitCount		= _byteswap_ulong(sourceDesc.BitsPerPixel);
+				dwRBitMask			= 0x00000000;
+				dwGBitMask			= 0x00000000;
+				dwBBitMask			= 0x00000000;
+				dwRGBAlphaBitMask	= _byteswap_ulong(0xff);
+			}
+			else
+			{
+				dwRGBBitCount		= 0x00000000;
+				dwRBitMask			= 0x00000000;
+				dwGBitMask			= 0x00000000;
+				dwBBitMask			= 0x00000000;
+				dwRGBAlphaBitMask	= 0x00000000;
+			}
+
+			fwrite(&dwRGBBitCount, 4, 1, file);
+			fwrite(&dwRBitMask, 4, 1, file);
+			fwrite(&dwGBitMask, 4, 1, file);
+			fwrite(&dwBBitMask, 4, 1, file);
+			fwrite(&dwRGBAlphaBitMask, 4, 1, file);
+
+			dwCaps1 = _byteswap_ulong(dwCaps1);
+			fwrite(&dwCaps1, 4, 1, file);
+
+			dwCaps2 = _byteswap_ulong(dwCaps2);
+			fwrite(&dwCaps2, 4, 1, file);
+
+			for(int i = 0; i < 3; i++)
+			{
+				fwrite(&nullOut, 4, 1, file);
+			}
+		
+			//Using memcpy, don't detile
+			//memcpy(outputBuff, pixels, cardMemory.platform[0]);
+
+			BOOL isBorderTexture = XGIsBorderTexture(&basemap);
+			UINT mipMapTailLevel = XGGetMipTailBaseLevel(sourceDesc.Width, sourceDesc.Height, isBorderTexture);
+			UINT slices = (basemap.Format.Dimension == GPUDIMENSION_CUBEMAP) ? 6 : 1;
+			char* outBuff = memAlloc, *inBuff = pixels;
+
+			UINT baseSize;
+			XGGetTextureLayout(&basemap, 0, &baseSize, 0,0,0,0,0,0,0,0);
+
+			if (basemap.Format.Dimension == GPUDIMENSION_CUBEMAP)
+			{
+				baseSize /= 6;
+			}
+
+			for (int slice = 0; slice < slices && inBuff < pixels + cardMemory.platform[0] && outBuff < memAlloc + cardMemory.platform[0]; slice++)
+			{
+				UINT mipMapOffset = XGGetMipLevelOffset(&basemap, slice, 0);
+				outBuff = memAlloc + (slice * sourceDesc.SlicePitch);
+				inBuff = pixels + mipMapOffset;
+
+				for (int level = 0; level < levels && inBuff < pixels + cardMemory.platform[0] && outBuff < memAlloc + cardMemory.platform[0]; level++)
+				{
+					DWORD rowPitch = (sourceDesc.WidthInBlocks * sourceDesc.BytesPerBlock) / (1 << level);
+					if (rowPitch < sourceDesc.BytesPerBlock)
+					{
+						rowPitch = sourceDesc.BytesPerBlock;
+					}
+
+					DWORD flags =
+						((XGIsPackedTexture(&basemap)) ? 0 : XGTILE_NONPACKED) | ((isBorderTexture) ? XGTILE_BORDER : 0);
+					
+					// Convert tiled texture to linear layout using XGUntileTextureLevel
+					XGUntileTextureLevel(
+						sourceDesc.Width,						// Width
+						sourceDesc.Height,						// Height
+						level,									// Level
+						XGGetGpuFormat(sourceDesc.Format),		// GpuFormat
+						flags,									// Flags
+						outBuff,								// pDestination
+						rowPitch,								// RowPitch
+						NULL,									// pPoint
+						inBuff,									// pSource
+						NULL									// pRect
+					);
+
+					UINT currentMipMapSize = baseSize / (1 << (2 * level));
+					if (currentMipMapSize < sourceDesc.BytesPerBlock)
+					{
+						currentMipMapSize = sourceDesc.BytesPerBlock;
+					}
+			
+					outBuff += currentMipMapSize;
+					mipMapOffset = XGGetMipLevelOffset(&basemap, slice, level + 1);
+					inBuff = pixels + baseSize + mipMapOffset;
+				}
+			}
+
+			switch(basemap.Format.Endian)
+			{
+			case GPUENDIAN_8IN16:
+				XGEndianSwapMemory(memAlloc, memAlloc, XGENDIAN_8IN16, 2, cardMemory.platform[0] / 2);
+				break;
+			case GPUENDIAN_8IN32:
+				XGEndianSwapMemory(memAlloc, memAlloc, XGENDIAN_8IN32, 4, cardMemory.platform[0] / 4);
+				break;
+			case GPUENDIAN_16IN32:
+				XGEndianSwapMemory(memAlloc, memAlloc, XGENDIAN_16IN32, 4, cardMemory.platform[0] / 4);
+				break;
+			default:
+				break;
+			}
+
+			fwrite(memAlloc, cardMemory.platform[0], 1, file);
+			fclose(file);
+			free(memAlloc);
+			return ERROR_SUCCESS;
+		}
+
+		struct ImageList
+		{
+		  unsigned int count;
+		  GfxImage *image[4096];
+		};
+
+		typedef void (*R_GetImageList_t)(ImageList *a1);
+		R_GetImageList_t R_GetImageList = R_GetImageList_t(0x82A1E4E8);
+
+		Utils::Hook::Detour Load_GfxImageAsset_Hook;
+		void Load_GfxImageAsset(GfxImage ** input)
+		{
+           // ImageList imageList;
+           // R_GetImageList(&imageList);
+
+            //for (unsigned int i = 0; i < imageList.count; i++)
+            //{
+            //    auto image = imageList.image[i];
+//
+            //    (*input)->dumpGfxImageAsset();
+            //}
+
+			(*input)->dumpGfxImageAsset();
+
+			auto Invoke = Load_GfxImageAsset_Hook.Invoke<void(*)(GfxImage **)>();
+			Invoke(input);
+		}
+
 		void Cmd_DumpMapEnts_f()
 		{
 			Structs::XAssetHeader files[2];
@@ -507,6 +970,8 @@ namespace Assets
 
 		void RegisterCommands()
 		{
+			Load_GfxImageAsset_Hook.Create(0x82380168, Load_GfxImageAsset);
+
 			// Okay so weirdly the game tries to re-register these every frame. So only run this function **once**.
 			static bool alreadyRanFunction = FALSE;
 			if (alreadyRanFunction)

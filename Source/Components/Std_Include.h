@@ -36,6 +36,25 @@
 #include <xtl.h>
 #include <stdint.h>
 
+// Standard library includes
+#include <cstddef>
+#include <vector>
+#include <string>
+#include <memory>
+#include <map>
+#include <algorithm>
+#include <functional>
+#include <cstdint>
+#include <cstring>
+#include <direct.h>
+#include <fstream>
+#include <sstream>
+#include <xtl.h>
+#include <xbox.h>
+#include <xgraphics.h>
+#include <io.h>
+#include <xjson.h>
+
 #include "Game\Assets.h"
 #include "Game\Structs.h"
 #include "Game\Symbols.h"
