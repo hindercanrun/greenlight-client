@@ -256,11 +256,6 @@ namespace Assets
 
 		int GfxImage::dumpGfxImageAsset()
 		{
-			// Only print if in Debug env to prevent spam
-#ifdef DEBUG
-			Symbols::Com_Printf(0, "Dumping image '%s'\n", name);
-#endif
-
 			// TODO: Implement dumping from streamed textures, in .ipak files. 
 			if (streaming)
 			{
@@ -288,7 +283,7 @@ namespace Assets
 			}
 
 			// TODO: Support 1D and 3D,  if needed.. Note: 3D should be supported since some textures are in 3D
-			if(basemap.Format.Dimension != GPUDIMENSION_2D && basemap.Format.Dimension != GPUDIMENSION_CUBEMAP)
+			if (basemap.Format.Dimension != GPUDIMENSION_2D && basemap.Format.Dimension != GPUDIMENSION_CUBEMAP)
 			{
 				Symbols::Com_PrintError(1, "Couldn't dump image '%s' because it's dimension value is '%i'\n", name, basemap.Format.Dimension);
 				return ERROR_CALL_NOT_IMPLEMENTED;
@@ -617,21 +612,11 @@ namespace Assets
 		R_GetImageList_t R_GetImageList = R_GetImageList_t(0x82A1E4E8);
 
 		Utils::Hook::Detour Load_GfxImageAsset_Hook;
-		void Load_GfxImageAsset(GfxImage ** input)
+		void Load_GfxImageAsset(GfxImage** input)
 		{
-           // ImageList imageList;
-           // R_GetImageList(&imageList);
-
-            //for (unsigned int i = 0; i < imageList.count; i++)
-            //{
-            //    auto image = imageList.image[i];
-//
-            //    (*input)->dumpGfxImageAsset();
-            //}
-
 			(*input)->dumpGfxImageAsset();
 
-			auto Invoke = Load_GfxImageAsset_Hook.Invoke<void(*)(GfxImage **)>();
+			auto Invoke = Load_GfxImageAsset_Hook.Invoke<void(*)(GfxImage**)>();
 			Invoke(input);
 		}
 
