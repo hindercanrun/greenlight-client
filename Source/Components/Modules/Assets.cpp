@@ -253,6 +253,22 @@ namespace Assets
 			}
 		}
 
+		void Cmd_DumpGfxLight_f()
+		{
+			Structs::XAssetHeader files[1024];
+			int count = Symbols::DB_GetAllXAssetOfType_FastFile(Structs::ASSET_TYPE_LIGHT_DEF, files, 1024);
+
+			for (int i = 0; i < count; i++)
+			{
+				Structs::GfxLightDef* varGfxLight = files[i].lightDef;
+
+				std::string assetName = varGfxLight->name;
+
+				std::string outputPath = "game:\\Redlight\\dump\\lights\\" + assetName;
+				Utils::FileSystem::WriteFileToDisk(outputPath.c_str(), varGfxLight->name, sizeof(Structs::GfxLightDef));
+			}
+		}
+
 		const char* LocalizedStrings_GetFileNotes(const std::string& prefix)
 		{
 			if (prefix == "debug")
@@ -482,6 +498,7 @@ namespace Assets
 		}
 
 		static Structs::cmd_function_s Cmd_DumpMapEnts_f_VAR;
+		static Structs::cmd_function_s Cmd_DumpGfxLight_f_VAR;
 		static Structs::cmd_function_s Cmd_DumpLocalizedStrings_f_VAR;
 		static Structs::cmd_function_s Cmd_DumpRawFiles_f_VAR;
 		static Structs::cmd_function_s Cmd_DumpStringTables_f_VAR;
@@ -500,6 +517,7 @@ namespace Assets
 			alreadyRanFunction = TRUE;
 
 			Symbols::Cmd_AddCommand("DumpMapEnts", Cmd_DumpMapEnts_f, &Cmd_DumpMapEnts_f_VAR);
+			Symbols::Cmd_AddCommand("DumpGfxLight", Cmd_DumpGfxLight_f, &Cmd_DumpGfxLight_f_VAR);
 			Symbols::Cmd_AddCommand("DumpLocalizedStrings", Cmd_DumpLocalizedStrings_f, &Cmd_DumpLocalizedStrings_f_VAR);
 			Symbols::Cmd_AddCommand("DumpRawFiles", Cmd_DumpRawFiles_f, &Cmd_DumpRawFiles_f_VAR);
 			Symbols::Cmd_AddCommand("DumpStringTables", Cmd_DumpStringTables_f, &Cmd_DumpStringTables_f_VAR);

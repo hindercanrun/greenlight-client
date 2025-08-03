@@ -7,6 +7,48 @@ namespace Structs
 		// Empty for now
 	} Material;
 
+	union GfxTexture
+	{
+		IDirect3DBaseTexture9* basemap;
+		IDirect3DTexture9* map;
+		IDirect3DVolumeTexture9* volmap;
+		IDirect3DCubeTexture9* cubemap;
+	};
+
+	struct Picmip
+	{
+		unsigned __int8 platform[2];
+	};
+
+	struct CardMemory
+	{
+		int platform[2];
+	};
+
+	struct GfxImage
+	{
+		GfxTexture texture;
+		unsigned __int8 mapType;
+		unsigned __int8 semantic;
+		unsigned __int8 category;
+		bool delayLoadPixels;
+		Picmip picmip;
+		bool noPicmip;
+		unsigned __int8 track;
+		CardMemory cardMemory;
+		unsigned __int16 width;
+		unsigned __int16 height;
+		unsigned __int16 depth;
+		unsigned __int8 levelCount;
+		unsigned __int8 streaming;
+		unsigned int baseSize;
+		unsigned __int8* pixels;
+		unsigned int loadedSize;
+		unsigned __int8 skippedMipLevels;
+		const char* name;
+		unsigned int hash;
+	};
+
 	typedef struct Bounds
 	{
 		float midPoint[3];
@@ -52,6 +94,19 @@ namespace Structs
 		int numEntityChars;
 		MapTriggers trigger;
 	} MapEnts;
+
+	struct GfxLightImage
+	{
+		struct GfxImage* image;
+		unsigned __int8 samplerState;
+	};
+
+	typedef struct GfxLightDef
+	{
+		const char* name;
+		GfxLightImage attenuation;
+		int lmapLookupStart;
+	} GfxLightDef;
 
 	struct Glyph
 	{
@@ -129,6 +184,7 @@ namespace Structs
 	typedef union XAssetHeader
 	{
 		MapEnts* mapEnts;
+		GfxLightDef* lightDef;
 		Font_s* font;
 		LocalizeEntry* localize;
 		RawFile* rawfile;
