@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Builds", "Builds", "{B2AEFBE9-C3B9-446F-8B8C-4CC1A6F1E932}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Greenlight", "Greenlight\Build\Greenlight.vcxproj", "{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Alpha", "Alpha\Build\Alpha.vcxproj", "{27E4FBC0-8841-4919-B223-C02F9EF82AC6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Xbox 360 = Debug|Xbox 360
+		Release|Xbox 360 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Debug|Xbox 360.ActiveCfg = Debug|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Debug|Xbox 360.Build.0 = Debug|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Debug|Xbox 360.Deploy.0 = Debug|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Release|Xbox 360.ActiveCfg = Release|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Release|Xbox 360.Build.0 = Release|Xbox 360
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6}.Release|Xbox 360.Deploy.0 = Release|Xbox 360
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A1C082FB-F9B2-4073-9F49-A68B3B27BE15} = {B2AEFBE9-C3B9-446F-8B8C-4CC1A6F1E932}
+		{27E4FBC0-8841-4919-B223-C02F9EF82AC6} = {B2AEFBE9-C3B9-446F-8B8C-4CC1A6F1E932}
+	EndGlobalSection
+EndGlobal

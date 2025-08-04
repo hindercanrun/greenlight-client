@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Xbox 360">
+      <Configuration>Debug</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Xbox 360">
+      <Configuration>Release</Configuration>
+      <Platform>Xbox 360</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{A1C082FB-F9B2-4073-9F49-A68B3B27BE15}</ProjectGuid>
+    <Keyword>Xbox360Proj</Keyword>
+    <ProjectName>Greenlight</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>2010-01</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <WholeProgramOptimization>false</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>2010-01</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
+    <LinkIncremental>false</LinkIncremental>
+    <RemoteRoot>hdd:\</RemoteRoot>
+    <OutDir>$(ProjectDir)Output\Bin\Release\</OutDir>
+    <IntDir>$(ProjectDir)Output\Obj\Release\</IntDir>
+    <OutputFile>Output\Bin\Release\Greenlight.exe</OutputFile>
+    <ImageXexOutput>Output\Bin\Release\Greenlight.xex</ImageXexOutput>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">
+    <LinkIncremental>false</LinkIncremental>
+    <RemoteRoot>hdd:\</RemoteRoot>
+    <OutDir>$(ProjectDir)Output\Bin\Debug\</OutDir>
+    <IntDir>$(ProjectDir)Output\Obj\Debug\</IntDir>
+    <OutputFile>Output\Bin\Debug\Greenlight.exe</OutputFile>
+    <ImageXexOutput>Output\Bin\Debug\Greenlight.xex</ImageXexOutput>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <StringPooling>true</StringPooling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FavorSizeOrSpeed>Size</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;RELEASE</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile>Std_Include.h</PrecompiledHeaderFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ProgramDatabaseFile>Output\Bin\Release\Greenlight.pdb</ProgramDatabaseFile>
+      <SetChecksum>true</SetChecksum>
+      <AdditionalDependencies>xapilib.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xboxkrnl.lib;xnet.lib;xaudio2.lib;xact3ltcg.lib;x3daudioltcg.lib;xmcoreltcg.lib;vcomp.lib</AdditionalDependencies>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ImageXex>
+      <ConfigurationFile>..\..\XEX.xml</ConfigurationFile>
+    </ImageXex>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Xbox 360'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <StringPooling>true</StringPooling>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <ExceptionHandling>false</ExceptionHandling>
+      <BufferSecurityCheck>false</BufferSecurityCheck>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <PreprocessorDefinitions>NDEBUG;_XBOX;</PreprocessorDefinitions>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <PrecompiledHeaderFile>Std_Include.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ProgramDatabaseFile>Output\Bin\Debug\Greenlight.pdb</ProgramDatabaseFile>
+      <SetChecksum>true</SetChecksum>
+      <AdditionalDependencies>xapilib.lib;d3d9ltcg.lib;d3dx9.lib;xgraphics.lib;xboxkrnl.lib;xnet.lib;xaudio2.lib;xact3ltcg.lib;x3daudioltcg.lib;xmcoreltcg.lib;vcomp.lib</AdditionalDependencies>
+      <AdditionalOptions>/dll /ALIGN:128,4096 %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <ImageXex>
+      <ConfigurationFile>..\..\XEX.xml</ConfigurationFile>
+    </ImageXex>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\Utils\FileSystem.cpp" />
+    <ClCompile Include="..\..\..\Utils\Hook.cpp" />
+    <ClCompile Include="..\..\..\Utils\String.cpp" />
+    <ClCompile Include="..\Game\Symbols.cpp" />
+    <ClCompile Include="..\Loader\Loader.cpp" />
+    <ClCompile Include="..\Main.cpp" />
+    <ClCompile Include="..\Modules\Assets.cpp" />
+    <ClCompile Include="..\Modules\DevGui.cpp" />
+    <ClCompile Include="..\Modules\Drawing.cpp" />
+    <ClCompile Include="..\Modules\Localized_Strings.cpp" />
+    <ClCompile Include="..\Modules\Patches.cpp" />
+    <ClCompile Include="..\Modules\UI.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\Utils\FileSystem.h" />
+    <ClInclude Include="..\..\..\Utils\Hook.h" />
+    <ClInclude Include="..\..\..\Utils\String.h" />
+    <ClInclude Include="..\Game\Assets.h" />
+    <ClInclude Include="..\Game\Structs.h" />
+    <ClInclude Include="..\Game\Symbols.h" />
+    <ClInclude Include="..\Loader\Loader.h" />
+    <ClInclude Include="..\Modules\Assets.h" />
+    <ClInclude Include="..\Modules\DevGui.h" />
+    <ClInclude Include="..\Modules\Drawing.h" />
+    <ClInclude Include="..\Modules\Localized_Strings.h" />
+    <ClInclude Include="..\Modules\Patches.h" />
+    <ClInclude Include="..\Modules\UI.h" />
+    <ClInclude Include="..\Std_Include.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

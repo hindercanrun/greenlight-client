@@ -1,5 +1,8 @@
-# build results
-Source/Build/Output/
+# Alpha build results
+Source/Builds/Alpha/Build/Output/
+
+# Greenlight build results
+Source/Builds/Greenlight/Build/Output/
 
 *.user
 *.sdf
