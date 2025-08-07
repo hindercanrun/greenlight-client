@@ -25,6 +25,8 @@ namespace Symbols
 
 	FS_FOpenTextFileWrite_t FS_FOpenTextFileWrite = FS_FOpenTextFileWrite_t(0x825CBB08);
 
+	SL_ConvertToString_t SL_ConvertToString = SL_ConvertToString_t(0x826BB148);
+
 	Sys_Milliseconds_t Sys_Milliseconds = Sys_Milliseconds_t(0x826414C0);
 
 	R_AddCmdDrawText_t R_AddCmdDrawText = R_AddCmdDrawText_t(0x82AA4210);

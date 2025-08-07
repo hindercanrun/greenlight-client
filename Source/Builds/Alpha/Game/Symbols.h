@@ -48,6 +48,9 @@ namespace Symbols
 	typedef int (*FS_FOpenTextFileWrite_t)(const char* filename);
 	extern FS_FOpenTextFileWrite_t FS_FOpenTextFileWrite;
 
+	typedef const char* (*SL_ConvertToString_t)(unsigned int stringValue);
+	extern SL_ConvertToString_t SL_ConvertToString;
+
 	typedef DWORD (*Sys_Milliseconds_t)();
 	extern Sys_Milliseconds_t Sys_Milliseconds;
 
