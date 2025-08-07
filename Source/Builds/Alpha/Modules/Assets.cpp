@@ -1012,6 +1012,208 @@ namespace Assets
 		Invoke(input);
 	}
 
+	struct MaterialStreamRouting
+	{
+		unsigned __int8 source;
+		unsigned __int8 dest;
+	};
+
+	struct MaterialVertexStreamRouting
+	{
+		MaterialStreamRouting data[16];
+		IDirect3DVertexDeclaration9* decl[18];
+	};
+
+	struct MaterialVertexDeclaration
+	{
+		unsigned __int8 streamCount;
+		bool hasOptionalSource;
+		bool isLoaded;
+		MaterialVertexStreamRouting routing;
+	};
+
+	struct MaterialVertexShaderProgram
+	{
+		IDirect3DVertexShader9 *vs;
+	};
+
+	struct MaterialVertexShader
+	{
+		const char* name;
+		MaterialVertexShaderProgram prog;
+	};
+
+	struct MaterialPixelShaderProgram
+	{
+		IDirect3DPixelShader9* ps;
+	};
+
+	struct MaterialPixelShader
+	{
+		const char* name;
+		MaterialPixelShaderProgram prog;
+	};
+
+	union MaterialArgumentLocation
+	{
+		unsigned __int16 offset;
+		unsigned __int8 textureIndex;
+		unsigned __int8 samplerIndex;
+	};
+
+	struct MaterialArgumentCodeConst
+	{
+		unsigned __int16 index;
+		unsigned __int8 firstRow;
+		unsigned __int8 rowCount;
+	};
+
+	union MaterialArgumentDef
+	{
+		const float* literalConst;
+		MaterialArgumentCodeConst codeConst;
+		unsigned int codeSampler;
+		unsigned int nameHash;
+	};
+
+	struct MaterialShaderArgument
+	{
+		unsigned __int16 type;
+		MaterialArgumentLocation location;
+		unsigned __int16 size;
+		unsigned __int16 buffer;
+		MaterialArgumentDef u;
+	};
+
+	struct MaterialPass
+	{
+		MaterialVertexDeclaration* vertexDecl;
+		MaterialVertexShader* vertexShader;
+		MaterialPixelShader* pixelShader;
+		MaterialPixelShader* localPixelShader;
+		unsigned __int8 perPrimArgCount;
+		unsigned __int8 perObjArgCount;
+		unsigned __int8 stableArgCount;
+		unsigned __int8 customSamplerFlags;
+		unsigned __int8 precompiledIndex;
+		unsigned __int8 materialType;
+		MaterialShaderArgument* localArgs;
+		MaterialShaderArgument* args;
+	};
+
+	struct MaterialTechnique
+	{
+		const char* name;
+		unsigned __int16 flags;
+		unsigned __int16 passCount;
+		MaterialPass passArray[1];
+	};
+
+	struct MaterialTechniqueSet
+	{
+		const char* name;
+		unsigned __int8 worldVertFormat;
+		MaterialTechnique* techniques[36];
+
+		int DumpMaterialTechniqueSetAsset();
+	};
+
+	int DumpMaterialTechnique(MaterialTechnique* tech, const char* filename)
+	{
+		FILE* f = fopen(filename, "wb");
+		if (!f)
+		{
+			Symbols::Com_PrintError(1, "Failed to open '%s' for writing!\n", filename);
+			return ERROR_CANNOT_MAKE;
+		}
+
+		fprintf(f, "{\n");
+
+		// This matches the stateMap line
+		fprintf(f, "\tstateMap \"%s\";\n\n", tech->name ? tech->name : "unknown");
+
+		for (int i = 0; i < tech->passCount; ++i)
+		{
+			MaterialPass* pass = &tech->passArray[i];
+
+			// Vertex Shader
+			if (pass->vertexShader && pass->vertexShader->name)
+			{
+				fprintf(f, "\tvertexShader 2.0 \"%s\"\n", pass->vertexShader->name);
+				fprintf(f, "\t{\n\t}\n\n");
+			}
+
+			// Pixel Shader
+			if (pass->pixelShader && pass->pixelShader->name)
+			{
+				fprintf(f, "\tpixelShader 2.0 \"%s\"\n", pass->pixelShader->name);
+				fprintf(f, "\t{\n\t}\n\n");
+			}
+
+			// Vertex attrib remaps
+			if (pass->vertexDecl)
+			{
+				const MaterialVertexStreamRouting& routing = pass->vertexDecl->routing;
+				for (int k = 0; k < 16; ++k)
+				{
+					const MaterialStreamRouting& route = routing.data[k];
+					if (route.source != 0 || route.dest != 0)
+					{
+						fprintf(f, "\tvertex.attrib%d = stream%d;\n", route.dest, route.source);
+					}
+				}
+			}
+		}
+
+		fprintf(f, "}\n");
+		fclose(f);
+		return ERROR_SUCCESS;
+	}
+
+	int MaterialTechniqueSet::DumpMaterialTechniqueSetAsset()
+	{
+		// Create the folder
+		CreateDirectory("game:\\Alpha\\dump\\techniques\\", 0);
+
+		Symbols::Com_Printf(0, "Attempting to dump '%s' to disk...\n", name);
+
+		const char* outputPath = Utils::String::Va("game:\\Alpha\\dump\\techniques\\%s.tech", name);
+		if (Utils::FileSystem::FileExists(outputPath))
+		{
+			Symbols::Com_PrintWarning(0, "'%s' has already been dumped at '%s'\n", name, outputPath);
+			return ERROR_DUP_NAME;
+		}
+
+		MaterialTechnique* lastTech = nullptr;
+
+		for (int i = 0; i < 36; ++i)
+		{
+			MaterialTechnique* tech = techniques[i];
+			if (!tech || tech == lastTech)
+				continue;
+
+			lastTech = tech;
+
+			const char* filename = Utils::String::Va("game:\\Alpha\\dump\\techniques\\%s.tech", tech->name);
+			int result = DumpMaterialTechnique(tech, filename);
+			if (result != ERROR_SUCCESS)
+			{
+				Symbols::Com_PrintWarning(0, "Failed to dump technique '%s'\n", tech->name);
+			}
+		}
+		return ERROR_SUCCESS;
+	}
+
+	Utils::Hook::Detour Load_MaterialTechniqueSetAsset_Hook;
+	void Load_MaterialTechniqueSetAsset(MaterialTechniqueSet** input)
+	{
+		MaterialTechniqueSet* currentTechSet = *input;
+		(*input)->DumpMaterialTechniqueSetAsset();
+
+		auto invoke = Load_MaterialTechniqueSetAsset_Hook.Invoke<void(*)(MaterialTechniqueSet**)>();
+		invoke(input);
+	}
+
 	struct CardMemory
 		{
 		  int platform[1];
@@ -4276,6 +4478,7 @@ namespace Assets
 		// TODO: Add XAnimParts dumper
 		// Load_XModelAsset_Hook.Create(0x823A2E48, Load_XModelAsset);
 		// Load_MaterialAsset_Hook.Create(0x823A2EC0, Load_MaterialAsset);
+		Load_MaterialTechniqueSetAsset_Hook.Create(0x823A2FB0, Load_MaterialTechniqueSetAsset);
 		// Load_GfxImageAsset_Hook.Create(0x823A3028, Load_GfxImageAsset);
 		// Load_MapEntsAsset_Hook.Create(0x823A3480, Load_MapEntsAsset);
 		// Load_LightDefAsset_Hook.Create(0x823A35E8, Load_LightDefAsset);
@@ -4306,6 +4509,7 @@ namespace Assets
 		Load_DestructibleDefAsset_Hook.Remove();
 		Load_XModelAsset_Hook.Remove();
 		Load_MaterialAsset_Hook.Remove();
+		Load_MaterialTechniqueSetAsset_Hook.Remove();
 		Load_GfxImageAsset_Hook.Remove();
 		Load_MapEntsAsset_Hook.Remove();
 		Load_LightDefAsset_Hook.Remove();
