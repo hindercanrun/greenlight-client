@@ -2842,6 +2842,105 @@ namespace Assets
 		Invoke(input);
 	}
 
+	struct KeyValuePair
+	{
+		int keyHash;
+		int namespaceHash;
+		const char* value;
+	};
+
+	typedef struct
+	{
+		const char* name;
+		int numVariables;
+		KeyValuePair* keyValuePairs;
+
+		int DumpKeyValuePairsAsset();
+	} KeyValuePairs;
+
+#define COUNT_OF(x) ((sizeof(x)/sizeof(0[x])) / ((size_t)(!(sizeof(x) % sizeof(0[x])))))
+
+	const char* GetKeyForHash(int hash, const char* nameSpace)
+	{
+		static char* keyList[] =
+		{
+			"GLOBAL",
+			"ipak_read",
+		};
+
+		const char* key = Utils::String::Va("%%%i", hash);
+
+		if (nameSpace && Symbols::Com_HashKey(nameSpace, 0x40) == hash)
+		{
+			key = nameSpace;
+		}
+		else
+		{
+			for (int i = 0; i < COUNT_OF(keyList); i++)
+			{
+				if (Symbols::Com_HashKey(keyList[i], 0x40) == hash)
+				{
+					key = keyList[i];
+					break;
+				}
+			}
+		}
+
+		return key;
+	}
+
+	int KeyValuePairs::DumpKeyValuePairsAsset()
+	{
+		// Create the folder
+		CreateDirectory("game:\\Alpha\\dump\\kvp\\", 0);
+
+		Symbols::Com_Printf(0, "Attempting to dump '%s' to disk...\n", name);
+
+		const char* outputPath = Utils::String::Va("game:\\Alpha\\dump\\kvp\\%s.kvp", name);
+		if (Utils::FileSystem::FileExists(outputPath))
+		{
+			Symbols::Com_PrintWarning(0, "'%s' has already been dumped at '%s'\n", name, outputPath);
+			return ERROR_DUP_NAME;
+		}
+
+		FILE* f = fopen(outputPath, "w");
+		if (!f)
+		{
+			Symbols::Com_PrintError(1, "Failed to open '%s' for writing!\n", name);
+			return ERROR_CANNOT_MAKE;
+		}
+
+		std::string buffer;
+
+		for (int i = 0; i < numVariables; i++)
+		{
+			KeyValuePair* varKeyValuePair = &keyValuePairs[i];
+
+			std::string nameSpace = GetKeyForHash(varKeyValuePair->namespaceHash, name);
+			std::string key = GetKeyForHash(varKeyValuePair->keyHash, name);
+
+			buffer.append(Utils::String::Va("\"%s\",\"%s\",\"%s\"\n", key.data(), nameSpace.data(), varKeyValuePair->value));
+		}
+
+		fprintf(f, buffer.c_str());
+
+		fclose(f);
+		Symbols::Com_Printf(0, "Dumped '%s' to disk...\n", name);
+		return ERROR_SUCCESS;
+	}
+
+	Utils::Hook::Detour Load_KeyValuePairsAsset_Hook;
+	void Load_KeyValuePairsAsset(KeyValuePairs** input)
+	{
+		KeyValuePairs* currentKVP = *input;
+		currentKVP->DumpKeyValuePairsAsset();
+
+		// TODO: Add loading from disk
+
+		auto Invoke = Load_KeyValuePairsAsset_Hook.Invoke<void(*)(KeyValuePairs**)>();
+		Invoke(input);
+	}
+
 	typedef enum
 	{
 		VEH_WHEELS_4		= 0,
@@ -4479,7 +4578,7 @@ namespace Assets
 		// TODO: Add XAnimParts dumper
 		// Load_XModelAsset_Hook.Create(0x823A2E48, Load_XModelAsset);
 		// Load_MaterialAsset_Hook.Create(0x823A2EC0, Load_MaterialAsset);
-		Load_MaterialTechniqueSetAsset_Hook.Create(0x823A2FB0, Load_MaterialTechniqueSetAsset);
+		// Load_MaterialTechniqueSetAsset_Hook.Create(0x823A2FB0, Load_MaterialTechniqueSetAsset);
 		// Load_GfxImageAsset_Hook.Create(0x823A3028, Load_GfxImageAsset);
 		// Load_MapEntsAsset_Hook.Create(0x823A3480, Load_MapEntsAsset);
 		// Load_LightDefAsset_Hook.Create(0x823A35E8, Load_LightDefAsset);
@@ -4492,6 +4591,7 @@ namespace Assets
 		// Load_LeaderboardDefAsset_Hook.Create(0x823A3B38, Load_LeaderboardDefAsset);
 		// Load_DDLAsset_Hook.Create(0x823A34F8, Load_DDLAsset);
 		// Load_ScriptParseTreeAsset_Hook.Create(0x823A3D90, Load_ScriptParseTreeAsset);
+		Load_KeyValuePairsAsset_Hook.Create(0x823A3EF8, Load_KeyValuePairsAsset);
 		// Load_VehicleDefAsset_Hook.Create(0x823A3F80, Load_VehicleDefAsset);
 		// Load_MemoryBlockAsset_Hook.Create(0x823A3FF8, Load_MemoryBlockAsset);
 		// Load_TracerDefAsset_Hook.Create(0x823A40E8, Load_TracerDefAsset);
@@ -4523,6 +4623,7 @@ namespace Assets
 		Load_LeaderboardDefAsset_Hook.Remove();
 		Load_DDLAsset_Hook.Remove();
 		Load_ScriptParseTreeAsset_Hook.Remove();
+		Load_KeyValuePairsAsset_Hook.Remove();
 		Load_VehicleDefAsset_Hook.Remove();
 		Load_MemoryBlockAsset_Hook.Remove();
 		Load_TracerDefAsset_Hook.Remove();
