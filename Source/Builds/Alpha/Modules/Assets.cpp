@@ -4591,7 +4591,7 @@ namespace Assets
 		// Load_LeaderboardDefAsset_Hook.Create(0x823A3B38, Load_LeaderboardDefAsset);
 		// Load_DDLAsset_Hook.Create(0x823A34F8, Load_DDLAsset);
 		// Load_ScriptParseTreeAsset_Hook.Create(0x823A3D90, Load_ScriptParseTreeAsset);
-		Load_KeyValuePairsAsset_Hook.Create(0x823A3EF8, Load_KeyValuePairsAsset);
+		// Load_KeyValuePairsAsset_Hook.Create(0x823A3EF8, Load_KeyValuePairsAsset);
 		// Load_VehicleDefAsset_Hook.Create(0x823A3F80, Load_VehicleDefAsset);
 		// Load_MemoryBlockAsset_Hook.Create(0x823A3FF8, Load_MemoryBlockAsset);
 		// Load_TracerDefAsset_Hook.Create(0x823A40E8, Load_TracerDefAsset);
