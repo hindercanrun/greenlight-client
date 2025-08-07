@@ -13,6 +13,12 @@
     <Filter Include="Utils">
       <UniqueIdentifier>{3795c03c-8926-4ce6-aa5f-63e4b3567224}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{b82b522f-b1b8-4e0d-ae25-9d252f5aa34e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\ZLib">
+      <UniqueIdentifier>{d944112d-a83f-49de-82c9-9fb12caf3f86}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Main.cpp" />
@@ -48,6 +54,39 @@
     </ClCompile>
     <ClCompile Include="..\Game\Symbols.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inflate.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\adler32.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inffast.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\compress.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\deflate.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\uncompr.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\zutil.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\crc32.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\infback.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inftrees.c">
+      <Filter>Dependencies\ZLib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\trees.c">
+      <Filter>Dependencies\ZLib</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +129,9 @@
     </ClInclude>
     <ClInclude Include="..\Game\Symbols.h">
       <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Dependencies\zlib.h">
+      <Filter>Dependencies\ZLib</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

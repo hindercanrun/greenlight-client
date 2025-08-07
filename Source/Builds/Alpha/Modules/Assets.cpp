@@ -5,6 +5,8 @@
 #include "../../../Utils/String.h"
 #include "../../../Utils/FileSystem.h"
 
+#include "../Dependencies/zlib.h"
+
 namespace Assets
 {
 	enum XAssetType
@@ -2029,6 +2031,60 @@ namespace Assets
 		int DumpRawFileAsset();
 	} RawFile;
 
+	int DecompressAnimtree(const void* buffer, size_t len, const char* outputPath, const char* assetName)
+	{
+		if (len <= 4)
+		{
+			Symbols::Com_PrintError(1, "Invalid size of animtree file '%s'!\n", assetName);
+			return ERROR_INVALID_DATA;
+		}
+
+		uint32_t expectedDecompressedSize = *(const uint32_t*)buffer;
+
+		z_stream stream;
+		memset(&stream, 0, sizeof(stream));
+		stream.next_in = (Bytef*)((const char*)buffer + 4);
+		stream.avail_in = (uInt)(len - 4);
+
+		int ret = inflateInit2(&stream, -15); // raw DEFLATE
+		if (ret != Z_OK)
+		{
+			Symbols::Com_PrintError(1, "inflateInit2 failed for '%s' with error %d\n", assetName, ret);
+			return ERROR_INVALID_DATA;
+		}
+
+		FILE* f = fopen(outputPath, "wb");
+		if (!f)
+		{
+			Symbols::Com_PrintError(1, "Failed to open '%s' for writing\n", outputPath);
+			inflateEnd(&stream);
+			return ERROR_CANNOT_MAKE;
+		}
+
+		Bytef outBuf[4096];
+		do
+		{
+			stream.next_out = outBuf;
+			stream.avail_out = sizeof(outBuf);
+
+			ret = inflate(&stream, Z_SYNC_FLUSH);
+			if (ret == Z_STREAM_ERROR || ret == Z_DATA_ERROR || ret == Z_MEM_ERROR)
+			{
+				Symbols::Com_PrintError(1, "inflate failed for '%s' with error %d\n", assetName, ret);
+				fclose(f);
+				inflateEnd(&stream);
+				return ERROR_INVALID_DATA;
+			}
+
+			size_t have = sizeof(outBuf) - stream.avail_out;
+			fwrite(outBuf, 1, have, f);
+		} while (stream.avail_out == 0);
+
+		fclose(f);
+		inflateEnd(&stream);
+		return ERROR_SUCCESS;
+	}
+
 	int RawFile::DumpRawFileAsset()
 	{
 		// Create the folder
@@ -2037,24 +2093,36 @@ namespace Assets
 		Symbols::Com_Printf(0, "Attempting to dump '%s' to disk...\n", name);
 
 		const char* outputPath = Utils::String::Va("game:\\Alpha\\dump\\%s", name);
-		//if (Utils::FileSystem::FileExists(outputPath))
-		//{
-			//Symbols::Com_PrintWarning(0, "'%s' has already been dumped at '%s'\n", name, outputPath);
-			//return ERROR_DUP_NAME;
-		//}
-
-		FILE* f = fopen(outputPath, "wb");
-		if (!f)
+		if (Utils::FileSystem::FileExists(outputPath))
 		{
-			Symbols::Com_PrintError(1, "Failed to open '%s' for writing!\n", name);
-			return ERROR_CANNOT_MAKE;
+			Symbols::Com_PrintWarning(0, "'%s' has already been dumped at '%s'\n", name, outputPath);
+			return ERROR_DUP_NAME;
 		}
 
-		fwrite(buffer, 1, len, f);
+		const char* extension = strrchr(name, '.');
+		// Check if it's an animtree, if yes then decompress it
+		if (extension && strcmp(extension, ".atr") == 0)
+		{
+			DecompressAnimtree(buffer, len, outputPath, name);
 
-		fclose(f);
-		Symbols::Com_Printf(0, "Dumped '%s' to disk...\n", name);
-		return ERROR_SUCCESS;
+			Symbols::Com_Printf(0, "Dumped '%s' to disk...\n", name);
+			return ERROR_SUCCESS;
+		}
+		else
+		{
+			FILE* f = fopen(outputPath, "wb");
+			if (!f)
+			{
+				Symbols::Com_PrintError(1, "Failed to open '%s' for writing!\n", name);
+				return ERROR_CANNOT_MAKE;
+			}
+
+			fwrite(buffer, 1, len, f);
+			fclose(f);
+
+			Symbols::Com_Printf(0, "Dumped '%s' to disk...\n", name);
+			return ERROR_SUCCESS;
+		}
 	}
 
 	Utils::Hook::Detour Load_RawFileAsset_Hook;

@@ -117,6 +117,39 @@
     <ClCompile Include="..\..\..\Utils\FileSystem.cpp" />
     <ClCompile Include="..\..\..\Utils\Hook.cpp" />
     <ClCompile Include="..\..\..\Utils\String.cpp" />
+    <ClCompile Include="..\Dependencies\adler32.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\compress.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\crc32.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\deflate.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\infback.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inffast.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inflate.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\inftrees.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\trees.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\uncompr.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
+    <ClCompile Include="..\Dependencies\zutil.c">
+      <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release|Xbox 360'">CompileAsC</CompileAs>
+    </ClCompile>
     <ClCompile Include="..\Game\Symbols.cpp" />
     <ClCompile Include="..\Loader\Loader.cpp" />
     <ClCompile Include="..\Main.cpp" />
@@ -131,6 +164,7 @@
     <ClInclude Include="..\..\..\Utils\FileSystem.h" />
     <ClInclude Include="..\..\..\Utils\Hook.h" />
     <ClInclude Include="..\..\..\Utils\String.h" />
+    <ClInclude Include="..\Dependencies\zlib.h" />
     <ClInclude Include="..\Game\Assets.h" />
     <ClInclude Include="..\Game\Structs.h" />
     <ClInclude Include="..\Game\Symbols.h" />
