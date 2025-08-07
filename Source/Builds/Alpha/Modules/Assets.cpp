@@ -1204,6 +1204,7 @@ namespace Assets
 		return ERROR_SUCCESS;
 	}
 
+	// TODO: More research needed
 	Utils::Hook::Detour Load_MaterialTechniqueSetAsset_Hook;
 	void Load_MaterialTechniqueSetAsset(MaterialTechniqueSet** input)
 	{
